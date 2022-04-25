@@ -13,15 +13,16 @@ dependencies:
     sdk: flutter
   flutter_midi_command: 0.4.5
   flutter_riverpod: 1.0.3
+  freezed_annotation: 2.0.1
   piano: 1.0.3+1
 
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
+  flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
-
-  flutter_lints: ^1.0.0
+  freezed: 2.0.2
 
 flutter:
   uses-material-design: true
