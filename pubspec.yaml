@@ -14,7 +14,11 @@ dependencies:
   flutter_midi_command: 0.4.5
   flutter_riverpod: 1.0.3
   freezed_annotation: 2.0.1
-  piano: 1.0.3+1
+  piano: 
+    git:
+      url: https://github.com/akvus/flutter_piano_widget.git
+      ref: 1c638da8f0e8739ecd772202f634971ef3a8eb74
+
 
   cupertino_icons: ^1.0.2
 
