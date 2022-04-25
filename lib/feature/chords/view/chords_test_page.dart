@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano/piano.dart';
 import 'package:piano_chords_test/feature/chords/view/chords_test_page_view_model.dart';
 
+// TODO consider adding clef too
+
 class ChordsTestPage extends StatelessWidget {
   const ChordsTestPage({Key? key}) : super(key: key);
 
@@ -27,9 +29,7 @@ class ChordsTestPage extends StatelessWidget {
                   naturalColor: Colors.white,
                   accidentalColor: Colors.black,
                   keyWidth: 50,
-                  noteRange: NoteRange.forClefs([
-                    Clef.Treble,
-                  ]),
+                  noteRange: NoteRange.forClefs([Clef.Alto]),
                   onNotePositionTapped: (position) {
                     // Use an audio library like flutter_midi to play the sound
                   },

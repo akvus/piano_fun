@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano_chords_test/feature/chords/data/midi_command.dart';
 import 'package:piano_chords_test/feature/chords/view/chords_test_page_model.dart';
 
-// TODO listen to MIDI devices being disconnected etc.
+enum MidiSetUpChangeEvent { deviceFound, deviceLost }
 
 final chordsTestPageViewModelProvder =
     StateNotifierProvider<ChordsTestPageViewModel, ChordsTestPageModel?>(
@@ -20,6 +20,17 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
   final MidiCommand _midiCommand;
 
   Future<void> onInit() async {
+    await _resetState();
+
+    _midiCommand.onMidiSetupChanged?.listen((event) {
+      if (event == MidiSetUpChangeEvent.deviceFound.name ||
+          event == MidiSetUpChangeEvent.deviceLost.name) {
+        _onDevicesUpdated();
+      }
+    });
+  }
+
+  Future<void> _resetState() async {
     final devices = await _midiCommand.devices;
 
     final connectionStatus = devices == null || devices.isEmpty
@@ -30,6 +41,36 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
       devices: devices ?? [],
       status: connectionStatus,
       selectedDevice: null,
+    );
+  }
+
+  Future<void> _onDevicesUpdated() async {
+    final currentState = state!;
+
+    final devices = await _midiCommand.devices ?? [];
+    ConnectionStatus status;
+    MidiDevice? selectedDevice;
+
+    try {
+      selectedDevice = devices.firstWhere(
+          (element) => element.name == currentState.selectedDevice!.name);
+    } catch (e) {
+      selectedDevice == null;
+    }
+
+    if (devices.isEmpty) {
+      status = ConnectionStatus.noDevices;
+    } else if (selectedDevice != null &&
+        currentState.status == ConnectionStatus.connected) {
+      status = ConnectionStatus.connected;
+    } else {
+      status = ConnectionStatus.disconnected;
+    }
+
+    state = currentState.copyWith(
+      devices: devices,
+      status: status,
+      selectedDevice: selectedDevice,
     );
   }
 
