@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano/piano.dart';
-import 'package:piano_chords_test/feature/chords/chords_test_page_view_model.dart';
+import 'package:piano_chords_test/feature/chords/view/chords_test_page_view_model.dart';
 
 class ChordsTestPage extends StatelessWidget {
   const ChordsTestPage({Key? key}) : super(key: key);
@@ -12,6 +13,10 @@ class ChordsTestPage extends StatelessWidget {
       body: Consumer(builder: (context, ref, child) {
         final viewModel = ref.watch(chordsTestPageViewModelProvder.notifier);
         final model = ref.watch(chordsTestPageViewModelProvder);
+
+        if (model == null) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
         return Center(
           child: Column(
@@ -33,7 +38,7 @@ class ChordsTestPage extends StatelessWidget {
               Row(
                 children: [
                   SizedBox(
-                    width: 220,
+                    width: 250,
                     child: Row(
                       children: const [
                         SizedBox(width: 16),
@@ -53,19 +58,11 @@ class ChordsTestPage extends StatelessWidget {
                   ),
                   const Spacer(),
                   SizedBox(
-                    width: 220,
+                    width: 250,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Expanded(
-                          child: DropdownButton<String>(
-                            items: ['a', 'b']
-                                .map((device) => DropdownMenuItem<String>(
-                                    value: device, child: Text(device)))
-                                .toList(),
-                            onChanged: (device) {},
-                          ),
-                        ),
+                        const Expanded(child: _DeviceSelectorWidget()),
                         const SizedBox(width: 16),
                         ElevatedButton(
                           child: const Text('Start'),
@@ -81,6 +78,32 @@ class ChordsTestPage extends StatelessWidget {
           ),
         );
       }),
+    );
+  }
+}
+
+class _DeviceSelectorWidget extends ConsumerWidget {
+  const _DeviceSelectorWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final viewModel = ref.watch(chordsTestPageViewModelProvder.notifier);
+    final model = ref.watch(chordsTestPageViewModelProvder)!;
+
+    return DropdownButton<MidiDevice?>(
+      value: model.selectedDevice,
+      items: model.devices
+          .map(
+            (device) => DropdownMenuItem<MidiDevice?>(
+              value: model.devices.first,
+              child: Text(
+                device.name,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          )
+          .toList(),
+      onChanged: (device) => viewModel.onDeviceSelected(device),
     );
   }
 }

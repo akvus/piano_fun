@@ -7,5 +7,9 @@ part 'chords_test_page_model.freezed.dart';
 class ChordsTestPageModel with _$ChordsTestPageModel {
   const factory ChordsTestPageModel({
     required List<MidiDevice> devices,
+    required ConnectionStatus status,
+    required MidiDevice? selectedDevice,
   }) = _ChordsTestePageModel;
 }
+
+enum ConnectionStatus { noDevices, disconnected, connected }
