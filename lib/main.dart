@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
+import 'package:piano_chords_test/feature/chords/chords_test_page.dart';
 
 /*
-MidiPacket -> 3 ints
 Example: https://github.com/InvisibleWrench/FlutterMidiCommand/tree/master/example/lib
 
-
-TODO basic
-- Architect the app a little xD
-- Map codes to notes C1->C6 etc.
-- Define chords
-- Try the piano package for UI, or develop own UI to display chords
-- Logic to randomly ask for a chord, match input, display result with clef and virtual keyboard 
-
-TODO if having too much time (like that ever is a case lol)
-- Each test has X chords, need to hit correct the 1st time, display % of correct per test
-- Record tries and draw some simple stats, charts etc. make it fancy
+TODO
+- lock to landscape
+- implement with love xD
 */
 
 void main() {
@@ -28,10 +20,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
+      theme: ThemeData(primarySwatch: Colors.orange),
+      home: const ChordsTestPage(),
     );
   }
 }
