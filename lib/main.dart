@@ -3,14 +3,6 @@ import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano_chords_test/feature/chords/view/chords_test_page.dart';
 
-/*
-Example: https://github.com/InvisibleWrench/FlutterMidiCommand/tree/master/example/lib
-
-TODO
-- lock to landscape
-- implement with love xD
-*/
-
 void main() {
   runApp(const ProviderScope(child: MyApp()));
 }

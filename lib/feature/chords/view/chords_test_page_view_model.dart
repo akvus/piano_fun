@@ -77,4 +77,17 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
   void onDeviceSelected(MidiDevice? device) {
     state = state!.copyWith(selectedDevice: device);
   }
+
+  void onStartPressed() {
+    final currentState = state!;
+
+    if (currentState.selectedDevice == null) {
+      // TODO display error
+    } else {
+      final status = currentState.status == ConnectionStatus.connected
+          ? ConnectionStatus.disconnected
+          : ConnectionStatus.connected;
+      state = currentState.copyWith(status: status);
+    }
+  }
 }

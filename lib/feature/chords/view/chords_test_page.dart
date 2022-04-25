@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano/piano.dart';
+import 'package:piano_chords_test/feature/chords/view/chords_test_page_model.dart';
 import 'package:piano_chords_test/feature/chords/view/chords_test_page_view_model.dart';
 
 // TODO consider adding clef too
+// TODO consider selectDevices state?
+// TODO the actual game of matching chords with MIDI, drawing stuff on keyboard etc.
+// TODO block portrait view
 
 class ChordsTestPage extends StatelessWidget {
   const ChordsTestPage({Key? key}) : super(key: key);
@@ -13,7 +17,6 @@ class ChordsTestPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Consumer(builder: (context, ref, child) {
-        final viewModel = ref.watch(chordsTestPageViewModelProvder.notifier);
         final model = ref.watch(chordsTestPageViewModelProvder);
 
         if (model == null) {
@@ -37,17 +40,8 @@ class ChordsTestPage extends StatelessWidget {
               ),
               Row(
                 children: [
-                  SizedBox(
-                    width: 250,
-                    child: Row(
-                      children: const [
-                        SizedBox(width: 16),
-                        Icon(Icons.circle, color: Colors.red),
-                        SizedBox(width: 8),
-                        Text('Not connected'),
-                      ],
-                    ),
-                  ),
+                  const SizedBox(width: 16),
+                  const SizedBox(width: 250, child: _GameStatusWidget()),
                   const Spacer(),
                   const Text(
                     'Cmaj7',
@@ -61,23 +55,81 @@ class ChordsTestPage extends StatelessWidget {
                     width: 250,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Expanded(child: _DeviceSelectorWidget()),
-                        const SizedBox(width: 16),
-                        ElevatedButton(
-                          child: const Text('Start'),
-                          onPressed: () {},
-                        ),
-                        const SizedBox(width: 16),
+                      children: const [
+                        Expanded(child: _DeviceSelectorWidget()),
+                        SizedBox(width: 16),
+                        _TheButtonWidget(),
                       ],
                     ),
                   ),
+                  const SizedBox(width: 16),
                 ],
               )
             ],
           ),
         );
       }),
+    );
+  }
+}
+
+class _GameStatusWidget extends ConsumerWidget {
+  const _GameStatusWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final model = ref.watch(chordsTestPageViewModelProvder)!;
+
+    String text;
+    Color color = Colors.red;
+    switch (model.status) {
+      case ConnectionStatus.connected:
+        text = 'Playing';
+        color = Colors.green;
+        break;
+      case ConnectionStatus.disconnected:
+        text = 'Not connected';
+
+        break;
+      case ConnectionStatus.noDevices:
+        text = 'No devices';
+        break;
+    }
+
+    return Row(
+      children: [
+        Icon(Icons.circle, color: color),
+        const SizedBox(width: 8),
+        Text(text),
+      ],
+    );
+  }
+}
+
+class _TheButtonWidget extends ConsumerWidget {
+  const _TheButtonWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final viewModel = ref.watch(chordsTestPageViewModelProvder.notifier);
+    final model = ref.watch(chordsTestPageViewModelProvder)!;
+
+    String text;
+    switch (model.status) {
+      case ConnectionStatus.connected:
+        text = 'Stop';
+        break;
+      case ConnectionStatus.disconnected:
+        text = 'Start';
+        break;
+      case ConnectionStatus.noDevices:
+        text = 'Ups';
+        break;
+    }
+
+    return ElevatedButton(
+      child: Text(text),
+      onPressed: () => viewModel.onStartPressed(),
     );
   }
 }
@@ -92,6 +144,7 @@ class _DeviceSelectorWidget extends ConsumerWidget {
 
     return DropdownButton<MidiDevice?>(
       value: model.selectedDevice,
+      isExpanded: true,
       items: model.devices
           .map(
             (device) => DropdownMenuItem<MidiDevice?>(
