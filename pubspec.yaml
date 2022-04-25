@@ -17,12 +17,11 @@ dependencies:
   piano: 
     git:
       url: https://github.com/akvus/flutter_piano_widget.git
-      ref: 1c638da8f0e8739ecd772202f634971ef3a8eb74
-
-
+      ref: 5439c421590912f149283068d0429bd7813f8850
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
+  build_runner: 2.1.7
   flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
