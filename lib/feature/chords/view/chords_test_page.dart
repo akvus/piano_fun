@@ -14,61 +14,75 @@ class ChordsTestPage extends StatelessWidget {
   const ChordsTestPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Consumer(builder: (context, ref, child) {
-        final model = ref.watch(chordsTestPageViewModelProvder);
+  Widget build(BuildContext context) => Scaffold(
+        body: Consumer(builder: (context, ref, child) {
+          final model = ref.watch(chordsTestPageViewModelProvder);
 
-        if (model == null) {
-          return const Center(child: CircularProgressIndicator());
-        }
+          if (model == null) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-        return Center(
-          child: Column(
-            children: [
-              Expanded(
-                child: InteractivePiano(
-                  highlightedNotes: [NotePosition(note: Note.C, octave: 3)],
-                  naturalColor: Colors.white,
-                  accidentalColor: Colors.black,
-                  keyWidth: 50,
-                  noteRange: NoteRange.forClefs([Clef.Alto]),
-                  onNotePositionTapped: (position) {
-                    // Use an audio library like flutter_midi to play the sound
-                  },
-                ),
-              ),
-              Row(
-                children: [
-                  const SizedBox(width: 16),
-                  const SizedBox(width: 250, child: _GameStatusWidget()),
-                  const Spacer(),
-                  const Text(
-                    'Cmaj7',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+          return Center(
+            child: Column(
+              children: [
+                const Expanded(child: _ThePianoWidget()),
+                Row(
+                  children: [
+                    const SizedBox(width: 16),
+                    const SizedBox(width: 250, child: _GameStatusWidget()),
+                    const Spacer(),
+                    const _RequestedChordWidget(),
+                    const Spacer(),
+                    SizedBox(
+                      width: 250,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: const [
+                          Expanded(child: _DeviceSelectorWidget()),
+                          SizedBox(width: 16),
+                          _TheButtonWidget(),
+                        ],
+                      ),
                     ),
-                  ),
-                  const Spacer(),
-                  SizedBox(
-                    width: 250,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
-                        Expanded(child: _DeviceSelectorWidget()),
-                        SizedBox(width: 16),
-                        _TheButtonWidget(),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                ],
-              )
-            ],
-          ),
-        );
-      }),
+                    const SizedBox(width: 16),
+                  ],
+                )
+              ],
+            ),
+          );
+        }),
+      );
+}
+
+class _RequestedChordWidget extends ConsumerWidget {
+  const _RequestedChordWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return const Text(
+      'Cmaj7',
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 18,
+      ),
+    );
+  }
+}
+
+class _ThePianoWidget extends ConsumerWidget {
+  const _ThePianoWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return InteractivePiano(
+      highlightedNotes: [NotePosition(note: Note.C, octave: 3)],
+      naturalColor: Colors.white,
+      accidentalColor: Colors.black,
+      keyWidth: 50,
+      noteRange: NoteRange.forClefs([Clef.Alto]),
+      onNotePositionTapped: (position) {
+        // Use an audio library like flutter_midi to play the sound
+      },
     );
   }
 }

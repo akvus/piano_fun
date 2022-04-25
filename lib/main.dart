@@ -10,10 +10,8 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.orange),
-      home: const ChordsTestPage(),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+        theme: ThemeData(primarySwatch: Colors.orange),
+        home: const ChordsTestPage(),
+      );
 }
