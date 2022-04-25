@@ -11,8 +11,7 @@ TODO basic
 - Map codes to notes C1->C6 etc.
 - Define chords
 - Try the piano package for UI, or develop own UI to display chords
-- Logic to randomly ask for a chord, match input, display result with clef and virtual keyboard
-- 
+- Logic to randomly ask for a chord, match input, display result with clef and virtual keyboard 
 
 TODO if having too much time (like that ever is a case lol)
 - Each test has X chords, need to hit correct the 1st time, display % of correct per test
