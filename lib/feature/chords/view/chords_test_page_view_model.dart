@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano_chords_test/feature/chords/data/midi_command.dart';
@@ -19,15 +21,27 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
 
   final MidiCommand _midiCommand;
 
+  late final StreamSubscription? _midiSetupChangeSub;
+  late final StreamSubscription? _midiDataReceiverSub;
+
   Future<void> onInit() async {
     await _resetState();
 
-    _midiCommand.onMidiSetupChanged?.listen((event) {
+    _midiSetupChangeSub = _midiCommand.onMidiSetupChanged?.listen((event) {
       if (event == MidiSetUpChangeEvent.deviceFound.name ||
           event == MidiSetUpChangeEvent.deviceLost.name) {
         _onDevicesUpdated();
       }
     });
+
+    _midiDataReceiverSub = _midiCommand.onMidiDataReceived?.listen((event) {});
+  }
+
+  @override
+  void dispose() {
+    _midiSetupChangeSub?.cancel();
+    _midiDataReceiverSub?.cancel();
+    super.dispose();
   }
 
   Future<void> _resetState() async {

@@ -35,29 +35,27 @@ class _ControlRowWidget extends ConsumerWidget {
   const _ControlRowWidget({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      children: [
-        const SizedBox(width: 16),
-        const SizedBox(width: 250, child: _GameStatusWidget()),
-        const Spacer(),
-        const _RequestedChordWidget(),
-        const Spacer(),
-        SizedBox(
-          width: 250,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              Expanded(child: _DeviceSelectorWidget()),
-              SizedBox(width: 16),
-              _TheButtonWidget(),
-            ],
+  Widget build(BuildContext context, WidgetRef ref) => Row(
+        children: [
+          const SizedBox(width: 16),
+          const SizedBox(width: 250, child: _GameStatusWidget()),
+          const Spacer(),
+          const _RequestedChordWidget(),
+          const Spacer(),
+          SizedBox(
+            width: 250,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: const [
+                Expanded(child: _DeviceSelectorWidget()),
+                SizedBox(width: 16),
+                _TheButtonWidget(),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(width: 16),
-      ],
-    );
-  }
+          const SizedBox(width: 16),
+        ],
+      );
 }
 
 class _RequestedChordWidget extends ConsumerWidget {
