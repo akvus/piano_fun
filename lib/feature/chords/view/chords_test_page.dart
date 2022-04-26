@@ -5,10 +5,10 @@ import 'package:piano/piano.dart';
 import 'package:piano_chords_test/feature/chords/view/chords_test_page_model.dart';
 import 'package:piano_chords_test/feature/chords/view/chords_test_page_view_model.dart';
 
-// TODO consider adding clef too
+// TODO consider adding a clef too
 // TODO consider selectDevices state?
 // TODO the actual game of matching chords with MIDI, drawing stuff on keyboard etc.
-// TODO block portrait view
+// TODO ability to play on the keyboard????
 
 class ChordsTestPage extends StatelessWidget {
   const ChordsTestPage({Key? key}) : super(key: key);
@@ -22,33 +22,31 @@ class ChordsTestPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          return Center(
-            child: Column(
-              children: [
-                const Expanded(child: _ThePianoWidget()),
-                Row(
-                  children: [
-                    const SizedBox(width: 16),
-                    const SizedBox(width: 250, child: _GameStatusWidget()),
-                    const Spacer(),
-                    const _RequestedChordWidget(),
-                    const Spacer(),
-                    SizedBox(
-                      width: 250,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          Expanded(child: _DeviceSelectorWidget()),
-                          SizedBox(width: 16),
-                          _TheButtonWidget(),
-                        ],
-                      ),
+          return Column(
+            children: [
+              const Expanded(child: _ThePianoWidget()),
+              Row(
+                children: [
+                  const SizedBox(width: 16),
+                  const SizedBox(width: 250, child: _GameStatusWidget()),
+                  const Spacer(),
+                  const _RequestedChordWidget(),
+                  const Spacer(),
+                  SizedBox(
+                    width: 250,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: const [
+                        Expanded(child: _DeviceSelectorWidget()),
+                        SizedBox(width: 16),
+                        _TheButtonWidget(),
+                      ],
                     ),
-                    const SizedBox(width: 16),
-                  ],
-                )
-              ],
-            ),
+                  ),
+                  const SizedBox(width: 16),
+                ],
+              )
+            ],
           );
         }),
       );

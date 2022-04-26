@@ -82,7 +82,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
     final currentState = state!;
 
     if (currentState.selectedDevice == null) {
-      // TODO display error
+      // TODO display error - maybe as the next status 'deviceNotSelected'
     } else {
       final status = currentState.status == ConnectionStatus.connected
           ? ConnectionStatus.disconnected
