@@ -34,7 +34,9 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
       }
     });
 
-    _midiDataReceiverSub = _midiCommand.onMidiDataReceived?.listen((event) {});
+    _midiDataReceiverSub = _midiCommand.onMidiDataReceived?.listen((data) {
+      _onMidiMessageReceived(data);
+    });
   }
 
   @override
@@ -103,5 +105,9 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
           : ConnectionStatus.connected;
       state = currentState.copyWith(status: status);
     }
+  }
+
+  void _onMidiMessageReceived(MidiPacket data) {
+    // TODO handle notes
   }
 }
