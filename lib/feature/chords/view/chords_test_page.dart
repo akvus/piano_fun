@@ -6,7 +6,6 @@ import 'package:piano_chords_test/feature/chords/view/chords_test_page_model.dar
 import 'package:piano_chords_test/feature/chords/view/chords_test_page_view_model.dart';
 
 // TODO consider adding a clef too
-// TODO consider selectDevices state?
 // TODO the actual game of matching chords with MIDI, drawing stuff on keyboard etc.
 // TODO ability to play on the keyboard????
 
@@ -23,33 +22,42 @@ class ChordsTestPage extends StatelessWidget {
           }
 
           return Column(
-            children: [
-              const Expanded(child: _ThePianoWidget()),
-              Row(
-                children: [
-                  const SizedBox(width: 16),
-                  const SizedBox(width: 250, child: _GameStatusWidget()),
-                  const Spacer(),
-                  const _RequestedChordWidget(),
-                  const Spacer(),
-                  SizedBox(
-                    width: 250,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
-                        Expanded(child: _DeviceSelectorWidget()),
-                        SizedBox(width: 16),
-                        _TheButtonWidget(),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                ],
-              )
+            children: const [
+              Expanded(child: _ThePianoWidget()),
+              _ControlRowWidget(),
             ],
           );
         }),
       );
+}
+
+class _ControlRowWidget extends ConsumerWidget {
+  const _ControlRowWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Row(
+      children: [
+        const SizedBox(width: 16),
+        const SizedBox(width: 250, child: _GameStatusWidget()),
+        const Spacer(),
+        const _RequestedChordWidget(),
+        const Spacer(),
+        SizedBox(
+          width: 250,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Expanded(child: _DeviceSelectorWidget()),
+              SizedBox(width: 16),
+              _TheButtonWidget(),
+            ],
+          ),
+        ),
+        const SizedBox(width: 16),
+      ],
+    );
+  }
 }
 
 class _RequestedChordWidget extends ConsumerWidget {
