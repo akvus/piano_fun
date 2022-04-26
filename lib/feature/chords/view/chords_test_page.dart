@@ -100,7 +100,7 @@ class _GameStatusWidget extends ConsumerWidget {
         color = Colors.green;
         break;
       case ConnectionStatus.disconnected:
-        text = 'Not connected';
+        text = 'Select device and start';
 
         break;
       case ConnectionStatus.noDevices:
