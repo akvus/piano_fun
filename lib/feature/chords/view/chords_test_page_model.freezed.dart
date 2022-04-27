@@ -19,6 +19,7 @@ mixin _$ChordsTestPageModel {
   List<MidiDevice> get devices => throw _privateConstructorUsedError;
   ConnectionStatus get status => throw _privateConstructorUsedError;
   MidiDevice? get selectedDevice => throw _privateConstructorUsedError;
+  Chord? get expectedChord => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChordsTestPageModelCopyWith<ChordsTestPageModel> get copyWith =>
@@ -33,7 +34,10 @@ abstract class $ChordsTestPageModelCopyWith<$Res> {
   $Res call(
       {List<MidiDevice> devices,
       ConnectionStatus status,
-      MidiDevice? selectedDevice});
+      MidiDevice? selectedDevice,
+      Chord? expectedChord});
+
+  $ChordCopyWith<$Res>? get expectedChord;
 }
 
 /// @nodoc
@@ -50,6 +54,7 @@ class _$ChordsTestPageModelCopyWithImpl<$Res>
     Object? devices = freezed,
     Object? status = freezed,
     Object? selectedDevice = freezed,
+    Object? expectedChord = freezed,
   }) {
     return _then(_value.copyWith(
       devices: devices == freezed
@@ -64,7 +69,22 @@ class _$ChordsTestPageModelCopyWithImpl<$Res>
           ? _value.selectedDevice
           : selectedDevice // ignore: cast_nullable_to_non_nullable
               as MidiDevice?,
+      expectedChord: expectedChord == freezed
+          ? _value.expectedChord
+          : expectedChord // ignore: cast_nullable_to_non_nullable
+              as Chord?,
     ));
+  }
+
+  @override
+  $ChordCopyWith<$Res>? get expectedChord {
+    if (_value.expectedChord == null) {
+      return null;
+    }
+
+    return $ChordCopyWith<$Res>(_value.expectedChord!, (value) {
+      return _then(_value.copyWith(expectedChord: value));
+    });
   }
 }
 
@@ -78,7 +98,11 @@ abstract class _$ChordsTestePageModelCopyWith<$Res>
   $Res call(
       {List<MidiDevice> devices,
       ConnectionStatus status,
-      MidiDevice? selectedDevice});
+      MidiDevice? selectedDevice,
+      Chord? expectedChord});
+
+  @override
+  $ChordCopyWith<$Res>? get expectedChord;
 }
 
 /// @nodoc
@@ -97,6 +121,7 @@ class __$ChordsTestePageModelCopyWithImpl<$Res>
     Object? devices = freezed,
     Object? status = freezed,
     Object? selectedDevice = freezed,
+    Object? expectedChord = freezed,
   }) {
     return _then(_ChordsTestePageModel(
       devices: devices == freezed
@@ -111,6 +136,10 @@ class __$ChordsTestePageModelCopyWithImpl<$Res>
           ? _value.selectedDevice
           : selectedDevice // ignore: cast_nullable_to_non_nullable
               as MidiDevice?,
+      expectedChord: expectedChord == freezed
+          ? _value.expectedChord
+          : expectedChord // ignore: cast_nullable_to_non_nullable
+              as Chord?,
     ));
   }
 }
@@ -121,7 +150,8 @@ class _$_ChordsTestePageModel implements _ChordsTestePageModel {
   const _$_ChordsTestePageModel(
       {required final List<MidiDevice> devices,
       required this.status,
-      required this.selectedDevice})
+      required this.selectedDevice,
+      required this.expectedChord})
       : _devices = devices;
 
   final List<MidiDevice> _devices;
@@ -135,10 +165,12 @@ class _$_ChordsTestePageModel implements _ChordsTestePageModel {
   final ConnectionStatus status;
   @override
   final MidiDevice? selectedDevice;
+  @override
+  final Chord? expectedChord;
 
   @override
   String toString() {
-    return 'ChordsTestPageModel(devices: $devices, status: $status, selectedDevice: $selectedDevice)';
+    return 'ChordsTestPageModel(devices: $devices, status: $status, selectedDevice: $selectedDevice, expectedChord: $expectedChord)';
   }
 
   @override
@@ -149,7 +181,9 @@ class _$_ChordsTestePageModel implements _ChordsTestePageModel {
             const DeepCollectionEquality().equals(other.devices, devices) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality()
-                .equals(other.selectedDevice, selectedDevice));
+                .equals(other.selectedDevice, selectedDevice) &&
+            const DeepCollectionEquality()
+                .equals(other.expectedChord, expectedChord));
   }
 
   @override
@@ -157,7 +191,8 @@ class _$_ChordsTestePageModel implements _ChordsTestePageModel {
       runtimeType,
       const DeepCollectionEquality().hash(devices),
       const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(selectedDevice));
+      const DeepCollectionEquality().hash(selectedDevice),
+      const DeepCollectionEquality().hash(expectedChord));
 
   @JsonKey(ignore: true)
   @override
@@ -170,7 +205,8 @@ abstract class _ChordsTestePageModel implements ChordsTestPageModel {
   const factory _ChordsTestePageModel(
       {required final List<MidiDevice> devices,
       required final ConnectionStatus status,
-      required final MidiDevice? selectedDevice}) = _$_ChordsTestePageModel;
+      required final MidiDevice? selectedDevice,
+      required final Chord? expectedChord}) = _$_ChordsTestePageModel;
 
   @override
   List<MidiDevice> get devices => throw _privateConstructorUsedError;
@@ -178,6 +214,8 @@ abstract class _ChordsTestePageModel implements ChordsTestPageModel {
   ConnectionStatus get status => throw _privateConstructorUsedError;
   @override
   MidiDevice? get selectedDevice => throw _privateConstructorUsedError;
+  @override
+  Chord? get expectedChord => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ChordsTestePageModelCopyWith<_ChordsTestePageModel> get copyWith =>

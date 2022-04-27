@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:piano_chords_test/feature/chords/data/chord_repository.dart';
 import 'package:piano_chords_test/feature/chords/data/midi_command.dart';
+import 'package:piano_chords_test/feature/chords/domain/chord.dart';
 import 'package:piano_chords_test/feature/chords/view/chords_test_page_model.dart';
 
 enum MidiSetUpChangeEvent { deviceFound, deviceLost }
@@ -11,15 +13,21 @@ final chordsTestPageViewModelProvder =
     StateNotifierProvider<ChordsTestPageViewModel, ChordsTestPageModel?>(
   (ref) => ChordsTestPageViewModel(
     ref.read(midiCommandProvider),
+    ref.read(chordRepositoryProvider),
   ),
 );
 
+// TODO too late for TDD, but maybe test some :D
 class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
-  ChordsTestPageViewModel(this._midiCommand) : super(null) {
+  ChordsTestPageViewModel(
+    this._midiCommand,
+    this._chordRepository,
+  ) : super(null) {
     onInit();
   }
 
-  final MidiCommand _midiCommand;
+  final MidiCommand _midiCommand; // TODO obliterate
+  final ChordRepository _chordRepository;
 
   late final StreamSubscription? _midiSetupChangeSub;
   late final StreamSubscription? _midiDataReceiverSub;
@@ -57,6 +65,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
       devices: devices ?? [],
       status: connectionStatus,
       selectedDevice: null,
+      expectedChord: null,
     );
   }
 
@@ -66,6 +75,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
     final devices = await _midiCommand.devices ?? [];
     ConnectionStatus status;
     MidiDevice? selectedDevice;
+    Chord? chord;
 
     try {
       selectedDevice = devices.firstWhere(
@@ -79,6 +89,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
     } else if (selectedDevice != null &&
         currentState.status == ConnectionStatus.connected) {
       status = ConnectionStatus.connected;
+      chord = _chordRepository.random;
     } else {
       status = ConnectionStatus.disconnected;
     }
@@ -87,6 +98,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
       devices: devices,
       status: status,
       selectedDevice: selectedDevice,
+      expectedChord: chord,
     );
   }
 

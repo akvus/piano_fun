@@ -6,7 +6,7 @@ import 'package:piano_chords_test/feature/chords/domain/chord.dart';
 
 final randomizerProvider = Provider((ref) => Random());
 
-final chrodRepositoryProvider = Provider.autoDispose(
+final chordRepositoryProvider = Provider.autoDispose(
   (ref) => ChordRepository(
     ref.read(randomizerProvider),
     ref.read(noteRepositoryProvider),
@@ -35,9 +35,17 @@ class ChordRepository {
         Chord(
           name: 'C maj',
           notes: [
-            notes[NoteName.c3],
-            notes[NoteName.e3],
-            notes[NoteName.g3],
+            notes[NoteName.c3]!,
+            notes[NoteName.e3]!,
+            notes[NoteName.g3]!,
+          ],
+        ),
+        Chord(
+          name: 'C min',
+          notes: [
+            notes[NoteName.c3]!,
+            notes[NoteName.d3s]!,
+            notes[NoteName.g3]!,
           ],
         ),
       ];

@@ -63,9 +63,11 @@ class _RequestedChordWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Text(
-      'Cmaj7',
-      style: TextStyle(
+    final model = ref.watch(chordsTestPageViewModelProvder)!;
+
+    return Text(
+      model.expectedChord?.name ?? 'Ready?',
+      style: const TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 18,
       ),
