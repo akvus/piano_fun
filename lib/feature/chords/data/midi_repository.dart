@@ -21,4 +21,12 @@ class MidiRepository {
   Stream<Note>? get notesStream => _midiCommand.onMidiDataReceived?.map(
         (event) => _noteMapper.map(event),
       );
+
+  Stream<String>? get midiSetupChangeStream => _midiCommand.onMidiSetupChanged;
+
+  Future<List<MidiDevice>> get devices async {
+    final devices = await _midiCommand.devices;
+
+    return devices ?? [];
+  }
 }
