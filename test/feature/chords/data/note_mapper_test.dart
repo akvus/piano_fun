@@ -1,19 +1,47 @@
+import 'dart:typed_data';
+
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:piano_chords_test/feature/chords/data/note_mapper.dart';
+import 'package:piano_chords_test/feature/chords/data/note_repository.dart';
 import 'package:piano_chords_test/feature/chords/domain/note.dart';
+
+import '../../../_mock/midi_packet.mock.dart';
 
 void main() {
   group('$NoteMapper', () {
     late NoteMapper noteMapper;
+    late NoteRepository noteRepository;
 
     setUp(() {
-      noteMapper = NoteMapper();
+      noteRepository = NoteRepository();
+      noteMapper = NoteMapper(noteRepository);
     });
 
-    test('map maps from $MidiPacket to $Note', () {
-      // TODO finish and add a mocking FW or fakes
-      final midiPacket = MidiPacket([10, 22, 33], timestamp, device);
+    group('map', () {
+      final mockedMidiPacket = MockedMidiPacket();
+
+      setUp(() {
+        reset(mockedMidiPacket);
+      });
+
+      test('map maps from $MidiPacket to $Note', () {
+        mockedMidiPacket.mockData(Uint8List.fromList([1, 48, 3]));
+
+        final actual = noteMapper.map(mockedMidiPacket);
+
+        expect(actual, const Note(name: 'C3', code: 48));
+      });
+
+      test('should throw an exception when a note is not found', () {
+        mockedMidiPacket.mockData(Uint8List.fromList([1, 148, 3]));
+
+        expect(
+          () => noteMapper.map(mockedMidiPacket),
+          throwsA(isA<StateError>()),
+        );
+      });
     });
   });
 }
