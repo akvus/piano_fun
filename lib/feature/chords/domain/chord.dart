@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:piano_chords_test/feature/chords/data/note.dart';
+import 'package:piano_chords_test/feature/chords/domain/note.dart';
 
 part 'chord.freezed.dart';
 
