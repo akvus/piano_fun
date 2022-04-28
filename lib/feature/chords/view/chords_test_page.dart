@@ -79,16 +79,15 @@ class _PianoWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(chordsTestPageViewModelProvder);
+    final viewModel = ref.watch(chordsTestPageViewModelProvder.notifier);
 
     return InteractivePiano(
       highlightedNotes: model.playedNotes,
       naturalColor: Colors.white,
       accidentalColor: Colors.black,
       keyWidth: 50,
-      noteRange: NoteRange.forClefs([Clef.Alto]),
-      onNotePositionTapped: (position) {
-        // Use an audio library like flutter_midi to play the sound
-      },
+      noteRange: NoteRange.forClefs([Clef.Treble]),
+      onNotePositionTapped: (position) => viewModel.onPianoKeyTapped(position),
     );
   }
 }

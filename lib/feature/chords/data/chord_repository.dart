@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano/piano.dart';
 import 'package:piano_chords_test/feature/chords/domain/chord.dart';
@@ -13,7 +12,7 @@ final chordRepositoryProvider = Provider.autoDispose(
   ),
 );
 
-const _baseOctave = 3;
+const _baseOctave = 4;
 
 class ChordRepository {
   ChordRepository(
