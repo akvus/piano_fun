@@ -10,18 +10,21 @@ enum ChordMatch { matched, partial, failed }
 
 class MatchChordUseCase {
   ChordMatch call({required Chord chord, required List<NotePosition> notes}) {
-    int matchesCount = 0;
-
     for (final note in notes) {
-      if (chord.notes.contains(note) ||
-          chord.notes.contains(note.alternativeAccidental)) {
-        matchesCount++;
-      } else {
+      if (!chord.notes.contains(note) &&
+          !chord.notes.contains(note.alternativeAccidental)) {
         return ChordMatch.failed;
       }
     }
 
-    return matchesCount == chord.notes.length
+    int chordMatches = 0;
+    for (final note in chord.notes) {
+      if (notes.contains(note) || notes.contains(note.alternativeAccidental)) {
+        chordMatches++;
+      }
+    }
+
+    return chordMatches == chord.notes.length
         ? ChordMatch.matched
         : ChordMatch.partial;
   }
