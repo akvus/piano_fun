@@ -63,7 +63,12 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
 
     final devices = await _midiRepository.devices;
 
-    state = state.copyWith(devices: devices);
+    state = state.copyWith(
+      devices: devices,
+      status: devices.isNotEmpty
+          ? ConnectionStatus.noDevices
+          : ConnectionStatus.disconnected,
+    );
   }
 
   @override

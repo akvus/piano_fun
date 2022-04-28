@@ -15,6 +15,7 @@ class NoteMapper {
 
   NotePosition map(MidiPacket from) {
     final code = from.data[noteCodePositionAtMidiData];
+    print(from.data.toString);
 
     final note = _noteRepository.find(code);
     if (note == null) {
