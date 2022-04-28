@@ -176,14 +176,14 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
       case ChordMatch.matched:
         // TODO success message
         chord = _chordRepository.random;
-        playedNotes = [];
+        playedNotes.clear();
         break;
       case ChordMatch.partial:
         // wait for following notes
         break;
       case ChordMatch.failed:
         // TODO error message
-        playedNotes = [];
+        playedNotes.clear();
         break;
     }
 

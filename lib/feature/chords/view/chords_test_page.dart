@@ -2,20 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano/piano.dart';
+import 'package:piano_chords_test/feature/chords/domain/match_chord_use_case.dart';
 import 'package:piano_chords_test/feature/chords/view/chords_test_page_model.dart';
 import 'package:piano_chords_test/feature/chords/view/chords_test_page_view_model.dart';
 
+// TODO updating piano does not work too well yet
+// TODO when already connected usb, and app starts -> not added to list
+
 // TODO consider adding a clef too
-// TODO the actual game of matching chords with MIDI, drawing stuff on keyboard etc.
-// TODO ability to play on the keyboard????
+// TODO ability to play on the keyboard???? or play the sound?
 
 class ChordsTestPage extends StatelessWidget {
   const ChordsTestPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        // TODO remove?
         body: Consumer(builder: (context, ref, child) {
+          ref.watch(matchChordUseCaseProvider);
+
           return Column(
             children: const [
               Expanded(child: _PianoWidget()),
