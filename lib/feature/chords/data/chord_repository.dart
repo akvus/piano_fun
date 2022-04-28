@@ -13,6 +13,8 @@ final chordRepositoryProvider = Provider.autoDispose(
   ),
 );
 
+const _baseOctave = 3;
+
 class ChordRepository {
   ChordRepository(
     this._randomizer,
@@ -30,58 +32,75 @@ class ChordRepository {
       Chord(
         name: 'C',
         notes: [
-          NotePosition(note: Note.C, octave: 3),
-          NotePosition(note: Note.E, octave: 3),
-          NotePosition(note: Note.G, octave: 3),
+          NotePosition(note: Note.C, octave: _baseOctave),
+          NotePosition(note: Note.E, octave: _baseOctave),
+          NotePosition(note: Note.G, octave: _baseOctave),
         ],
       ),
       Chord(
         name: 'Cm',
         notes: [
-          NotePosition(note: Note.C, octave: 3),
-          NotePosition(note: Note.E, octave: 3, accidental: Accidental.Flat),
-          NotePosition(note: Note.G, octave: 3),
+          NotePosition(note: Note.C, octave: _baseOctave),
+          NotePosition(
+              note: Note.E, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.G, octave: _baseOctave),
         ],
       ),
       Chord(
         name: 'C7',
         notes: [
-          NotePosition(note: Note.C, octave: 3),
-          NotePosition(note: Note.E, octave: 3),
-          NotePosition(note: Note.G, octave: 3),
-          NotePosition(note: Note.B, octave: 3),
+          NotePosition(note: Note.C, octave: _baseOctave),
+          NotePosition(note: Note.E, octave: _baseOctave),
+          NotePosition(note: Note.G, octave: _baseOctave),
+          NotePosition(note: Note.B, octave: _baseOctave),
         ],
       ),
       Chord(
         name: 'D',
         notes: [
-          NotePosition(note: Note.D, octave: 3),
-          NotePosition(note: Note.F, octave: 3, accidental: Accidental.Sharp),
-          NotePosition(note: Note.A, octave: 3),
+          NotePosition(note: Note.D, octave: _baseOctave),
+          NotePosition(
+            note: Note.F,
+            octave: _baseOctave,
+            accidental: Accidental.Sharp,
+          ),
+          NotePosition(note: Note.A, octave: _baseOctave),
         ],
       ),
       Chord(
         name: 'Dm',
         notes: [
-          NotePosition(note: Note.D, octave: 3),
-          NotePosition(note: Note.F, octave: 3),
-          NotePosition(note: Note.A, octave: 3),
+          NotePosition(note: Note.D, octave: _baseOctave),
+          NotePosition(note: Note.F, octave: _baseOctave),
+          NotePosition(note: Note.A, octave: _baseOctave),
         ],
       ),
       Chord(
         name: 'E',
         notes: [
-          NotePosition(note: Note.E, octave: 3),
-          NotePosition(note: Note.G, octave: 3, accidental: Accidental.Sharp),
-          NotePosition(note: Note.B, octave: 3),
+          NotePosition(note: Note.E, octave: _baseOctave),
+          NotePosition(
+            note: Note.G,
+            octave: _baseOctave,
+            accidental: Accidental.Sharp,
+          ),
+          NotePosition(note: Note.B, octave: _baseOctave),
         ],
       ),
       Chord(
         name: 'E♭',
         notes: [
-          NotePosition(note: Note.E, octave: 3, accidental: Accidental.Flat),
-          NotePosition(note: Note.G, octave: 3),
-          NotePosition(note: Note.B, octave: 3, accidental: Accidental.Flat),
+          NotePosition(
+            note: Note.E,
+            octave: _baseOctave,
+            accidental: Accidental.Flat,
+          ),
+          NotePosition(note: Note.G, octave: _baseOctave),
+          NotePosition(
+            note: Note.B,
+            octave: _baseOctave,
+            accidental: Accidental.Flat,
+          ),
         ],
       ),
     ];
