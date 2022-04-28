@@ -200,4 +200,6 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
       playedNotes: playedNotes,
     );
   }
+
+  void onPianoKeyTapped(NotePosition position) => _onNoteReceived(position);
 }
