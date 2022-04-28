@@ -9,6 +9,8 @@ final midiRepositoryProvider = Provider.autoDispose((ref) => MidiRepository(
       ref.read(noteMapperProvider),
     ));
 
+const noteCodePositionAtMidiData = 1;
+
 class MidiRepository {
   MidiRepository(
     this._midiCommand,
@@ -18,9 +20,16 @@ class MidiRepository {
   final MidiCommand _midiCommand;
   final NoteMapper _noteMapper;
 
-  Stream<NotePosition>? get notesStream => _midiCommand.onMidiDataReceived?.map(
-        (event) => _noteMapper.map(event),
-      );
+  Stream<NotePosition>? get notesStream =>
+      // Note: There are two MIDI events for each key pressed: on, off.
+      // Currently we need not to know this, so we can skip the off events
+      _midiCommand.onMidiDataReceived
+          ?.distinct((prev, current) =>
+              prev.data[noteCodePositionAtMidiData] ==
+              current.data[noteCodePositionAtMidiData])
+          .map(
+            (event) => _noteMapper.map(event),
+          );
 
   Stream<String>? get midiSetupChangeStream => _midiCommand.onMidiSetupChanged;
 
