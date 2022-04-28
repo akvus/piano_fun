@@ -14,13 +14,8 @@ class ChordsTestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        // TODO remove?
         body: Consumer(builder: (context, ref, child) {
-          final model = ref.watch(chordsTestPageViewModelProvder);
-
-          if (model == null) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
           return Column(
             children: const [
               Expanded(child: _PianoWidget()),
@@ -63,7 +58,7 @@ class _RequestedChordWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(chordsTestPageViewModelProvder)!;
+    final model = ref.watch(chordsTestPageViewModelProvder);
 
     return Text(
       model.expectedChord?.name ?? 'Ready?',
@@ -80,7 +75,7 @@ class _PianoWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(chordsTestPageViewModelProvder)!;
+    final model = ref.watch(chordsTestPageViewModelProvder);
 
     return InteractivePiano(
       highlightedNotes: model.playedNotes,
@@ -100,7 +95,7 @@ class _GameStatusWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(chordsTestPageViewModelProvder)!;
+    final model = ref.watch(chordsTestPageViewModelProvder);
 
     String text;
     Color color = Colors.red;
@@ -134,7 +129,7 @@ class _TheButtonWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(chordsTestPageViewModelProvder.notifier);
-    final model = ref.watch(chordsTestPageViewModelProvder)!;
+    final model = ref.watch(chordsTestPageViewModelProvder);
 
     String text;
     switch (model.status) {
@@ -162,7 +157,7 @@ class _DeviceSelectorWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(chordsTestPageViewModelProvder.notifier);
-    final model = ref.watch(chordsTestPageViewModelProvder)!;
+    final model = ref.watch(chordsTestPageViewModelProvder);
 
     return DropdownButton<MidiDevice?>(
       value: model.selectedDevice,

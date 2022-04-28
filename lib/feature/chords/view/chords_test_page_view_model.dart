@@ -13,7 +13,7 @@ import 'package:piano_chords_test/feature/chords/view/chords_test_page_model.dar
 enum MidiSetUpChangeEvent { deviceFound, deviceLost }
 
 final chordsTestPageViewModelProvder =
-    StateNotifierProvider<ChordsTestPageViewModel, ChordsTestPageModel?>(
+    StateNotifierProvider<ChordsTestPageViewModel, ChordsTestPageModel>(
   (ref) => ChordsTestPageViewModel(
     ref.read(midiRepositoryProvider),
     ref.read(chordRepositoryProvider),
@@ -23,12 +23,18 @@ final chordsTestPageViewModelProvder =
 
 // TODO can the model be non-nullable?
 // TODO too late for TDD, but maybe test some :D
-class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
+class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
   ChordsTestPageViewModel(
     this._midiRepository,
     this._chordRepository,
     this._matchChordUseCase,
-  ) : super(null) {
+  ) : super(const ChordsTestPageModel(
+          devices: [],
+          status: ConnectionStatus.noDevices,
+          selectedDevice: null,
+          expectedChord: null,
+          playedNotes: [],
+        )) {
     onInit();
   }
 
@@ -53,13 +59,12 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
     _midiDataReceiverSub = _midiRepository.notesStream?.listen(
       (note) => _onNoteReceived(note),
     )?..onError((e) {
-        print('Error $e');
+        debugPrint('Error $e');
       });
   }
 
   @override
   void dispose() {
-    print('dispose');
     _midiSetupChangeSub?.cancel();
     _midiDataReceiverSub?.cancel();
     super.dispose();
@@ -68,29 +73,25 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
   Future<void> _resetState() async {
     final devices = await _midiRepository.devices;
 
-    final connectionStatus = devices.isEmpty
+    final status = devices.isEmpty
         ? ConnectionStatus.noDevices
         : ConnectionStatus.disconnected;
 
-    state = ChordsTestPageModel(
+    state.copyWith(
       devices: devices,
-      status: connectionStatus,
-      selectedDevice: null,
-      expectedChord: null,
-      playedNotes: [],
+      status: status,
     );
   }
 
   Future<void> _onDevicesUpdated() async {
-    final currentState = state!;
-
     final devices = await _midiRepository.devices;
     ConnectionStatus status;
     MidiDevice? selectedDevice;
 
     try {
       selectedDevice = devices.firstWhere(
-          (element) => element.name == currentState.selectedDevice!.name);
+        (element) => element.name == state.selectedDevice!.name,
+      );
     } catch (e) {
       selectedDevice == null;
     }
@@ -98,13 +99,13 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
     if (devices.isEmpty) {
       status = ConnectionStatus.noDevices;
     } else if (selectedDevice != null &&
-        currentState.status == ConnectionStatus.connected) {
+        state.status == ConnectionStatus.connected) {
       status = ConnectionStatus.connected;
     } else {
       status = ConnectionStatus.disconnected;
     }
 
-    state = currentState.copyWith(
+    state = state.copyWith(
       devices: devices,
       status: status,
       selectedDevice: selectedDevice,
@@ -112,16 +113,14 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
   }
 
   void onDeviceSelected(MidiDevice? device) {
-    state = state!.copyWith(selectedDevice: device);
+    state = state.copyWith(selectedDevice: device);
   }
 
   Future<void> onActionButtonPressed() async {
-    final currentState = state!;
-
-    if (currentState.selectedDevice == null) {
+    if (state.selectedDevice == null) {
       // TODO display info to select a device
     } else {
-      switch (currentState.status) {
+      switch (state.status) {
         case ConnectionStatus.noDevices:
           // TODO: display some message relevant
           break;
@@ -136,11 +135,11 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
   }
 
   Future<void> _start() async {
-    assert(state?.selectedDevice != null);
+    assert(state.selectedDevice != null);
 
-    await _midiRepository.connect(state!.selectedDevice!);
+    await _midiRepository.connect(state.selectedDevice!);
 
-    state = state!.copyWith(
+    state = state.copyWith(
       status: ConnectionStatus.connected,
       expectedChord: _chordRepository.random,
       playedNotes: [],
@@ -148,7 +147,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
   }
 
   void _stop() {
-    state = state!.copyWith(
+    state = state.copyWith(
       status: ConnectionStatus.disconnected,
       expectedChord: null,
       playedNotes: [],
@@ -156,19 +155,19 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
   }
 
   void _onNoteReceived(NotePosition note) {
-    final currentState = state!;
-
-    if (currentState.status != ConnectionStatus.connected) {
+    if (state.status != ConnectionStatus.connected) {
       return;
     }
 
     debugPrint('Note received: ${note.name}');
 
-    Chord chord = currentState.expectedChord!;
-    List<NotePosition> playedNotes = [note, ...currentState.playedNotes];
+    Chord chord = state.expectedChord!;
+    List<NotePosition> playedNotes = [note, ...state.playedNotes];
 
     final chordMatch = _matchChordUseCase(
-        chord: currentState.expectedChord!, notes: playedNotes);
+      chord: state.expectedChord!,
+      notes: playedNotes,
+    );
 
     switch (chordMatch) {
       case ChordMatch.matched:
@@ -185,7 +184,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
         break;
     }
 
-    state = currentState.copyWith(
+    state = state.copyWith(
       expectedChord: chord,
       playedNotes: playedNotes,
     );
