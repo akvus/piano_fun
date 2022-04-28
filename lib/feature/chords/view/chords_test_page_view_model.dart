@@ -60,6 +60,10 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
     )?..onError((e) {
         debugPrint('Error $e');
       });
+
+    final devices = await _midiRepository.devices;
+
+    state = state.copyWith(devices: devices);
   }
 
   @override
