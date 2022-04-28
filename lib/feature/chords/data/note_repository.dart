@@ -1,52 +1,65 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:piano_chords_test/feature/chords/domain/note.dart';
+import 'package:piano/piano.dart';
 
 final noteRepositoryProvider = Provider.autoDispose((ref) => NoteRepository());
 
-enum NoteName {
-  c3,
-  c3s,
-  d3,
-  d3s,
-  e3,
-  f3,
-  f3s,
-  g3,
-  g3s,
-  a3,
-  a3s,
-  b3,
-  c4,
-  c4s,
-  d4,
-  d4s,
-  e4,
-  f4,
-  f4s,
-  g4,
-  g4s,
-  a4,
-  a4s,
-  b4,
-  c5,
-}
+const notesInOctave = 12;
 
 class NoteRepository {
-  Map<NoteName, Note>? _cache;
+  Map<int, NotePosition>? _cache;
 
-  Map<NoteName, Note> get all {
+  Map<int, NotePosition> get all {
     if (_cache == null) {
-      final map = <NoteName, Note>{};
-      int code = 48;
-      for (var i = 0; i < NoteName.values.length; i++) {
-        final noteName = NoteName.values[i];
-        map[noteName] = Note(name: noteName.name.toUpperCase(), code: code++);
+      final map = <int, NotePosition>{};
+
+      const startWithOctave = 3;
+      const octaveCount = 2;
+      const c3Code = 48;
+
+      for (int i = 0; i < octaveCount; i++) {
+        final octave = startWithOctave + i;
+        int noteCode = c3Code + i * notesInOctave;
+
+        map[noteCode++] = NotePosition(note: Note.C, octave: octave);
+        map[noteCode++] = NotePosition(
+          note: Note.C,
+          octave: octave,
+          accidental: Accidental.Sharp,
+        );
+        map[noteCode++] = NotePosition(note: Note.D, octave: octave);
+        map[noteCode++] = NotePosition(
+          note: Note.D,
+          octave: octave,
+          accidental: Accidental.Sharp,
+        );
+        map[noteCode++] = NotePosition(note: Note.E, octave: octave);
+        map[noteCode++] = NotePosition(note: Note.F, octave: octave);
+        map[noteCode++] = NotePosition(
+          note: Note.F,
+          octave: octave,
+          accidental: Accidental.Sharp,
+        );
+        map[noteCode++] = NotePosition(note: Note.G, octave: octave);
+        map[noteCode++] = NotePosition(
+          note: Note.G,
+          octave: octave,
+          accidental: Accidental.Sharp,
+        );
+        map[noteCode++] = NotePosition(note: Note.A, octave: octave);
+        map[noteCode++] = NotePosition(
+          note: Note.A,
+          octave: octave,
+          accidental: Accidental.Sharp,
+        );
+        map[noteCode++] = NotePosition(note: Note.B, octave: octave);
       }
+
       _cache = map;
     }
 
     return _cache!;
   }
 
-  Note? find(int code) => all.values.firstWhere((note) => note.code == code);
+  NotePosition? find(int code) =>
+      all.entries.firstWhere((entry) => entry.key == code).value;
 }

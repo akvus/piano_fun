@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:piano_chords_test/feature/chords/domain/note.dart';
+import 'package:piano/piano.dart';
 
 part 'chord.freezed.dart';
 
@@ -7,6 +7,6 @@ part 'chord.freezed.dart';
 class Chord with _$Chord {
   const factory Chord({
     required String name,
-    required List<Note> notes,
+    required List<NotePosition> notes,
   }) = _Chords;
 }

@@ -20,7 +20,7 @@ mixin _$ChordsTestPageModel {
   ConnectionStatus get status => throw _privateConstructorUsedError;
   MidiDevice? get selectedDevice => throw _privateConstructorUsedError;
   Chord? get expectedChord => throw _privateConstructorUsedError;
-  List<Note> get playedNotes => throw _privateConstructorUsedError;
+  List<NotePosition> get playedNotes => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChordsTestPageModelCopyWith<ChordsTestPageModel> get copyWith =>
@@ -37,7 +37,7 @@ abstract class $ChordsTestPageModelCopyWith<$Res> {
       ConnectionStatus status,
       MidiDevice? selectedDevice,
       Chord? expectedChord,
-      List<Note> playedNotes});
+      List<NotePosition> playedNotes});
 
   $ChordCopyWith<$Res>? get expectedChord;
 }
@@ -79,7 +79,7 @@ class _$ChordsTestPageModelCopyWithImpl<$Res>
       playedNotes: playedNotes == freezed
           ? _value.playedNotes
           : playedNotes // ignore: cast_nullable_to_non_nullable
-              as List<Note>,
+              as List<NotePosition>,
     ));
   }
 
@@ -107,7 +107,7 @@ abstract class _$ChordsTestePageModelCopyWith<$Res>
       ConnectionStatus status,
       MidiDevice? selectedDevice,
       Chord? expectedChord,
-      List<Note> playedNotes});
+      List<NotePosition> playedNotes});
 
   @override
   $ChordCopyWith<$Res>? get expectedChord;
@@ -152,7 +152,7 @@ class __$ChordsTestePageModelCopyWithImpl<$Res>
       playedNotes: playedNotes == freezed
           ? _value.playedNotes
           : playedNotes // ignore: cast_nullable_to_non_nullable
-              as List<Note>,
+              as List<NotePosition>,
     ));
   }
 }
@@ -165,7 +165,7 @@ class _$_ChordsTestePageModel implements _ChordsTestePageModel {
       required this.status,
       required this.selectedDevice,
       required this.expectedChord,
-      required final List<Note> playedNotes})
+      required final List<NotePosition> playedNotes})
       : _devices = devices,
         _playedNotes = playedNotes;
 
@@ -182,9 +182,9 @@ class _$_ChordsTestePageModel implements _ChordsTestePageModel {
   final MidiDevice? selectedDevice;
   @override
   final Chord? expectedChord;
-  final List<Note> _playedNotes;
+  final List<NotePosition> _playedNotes;
   @override
-  List<Note> get playedNotes {
+  List<NotePosition> get playedNotes {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_playedNotes);
   }
@@ -231,7 +231,7 @@ abstract class _ChordsTestePageModel implements ChordsTestPageModel {
       required final ConnectionStatus status,
       required final MidiDevice? selectedDevice,
       required final Chord? expectedChord,
-      required final List<Note> playedNotes}) = _$_ChordsTestePageModel;
+      required final List<NotePosition> playedNotes}) = _$_ChordsTestePageModel;
 
   @override
   List<MidiDevice> get devices => throw _privateConstructorUsedError;
@@ -242,7 +242,7 @@ abstract class _ChordsTestePageModel implements ChordsTestPageModel {
   @override
   Chord? get expectedChord => throw _privateConstructorUsedError;
   @override
-  List<Note> get playedNotes => throw _privateConstructorUsedError;
+  List<NotePosition> get playedNotes => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ChordsTestePageModelCopyWith<_ChordsTestePageModel> get copyWith =>

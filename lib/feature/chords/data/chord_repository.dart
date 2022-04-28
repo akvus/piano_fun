@@ -35,26 +35,26 @@ class ChordRepository {
         Chord(
           name: 'C major',
           notes: [
-            notes[NoteName.c3]!,
-            notes[NoteName.e3]!,
-            notes[NoteName.g3]!,
+            notes[48]!,
+            notes[52]!,
+            notes[55]!,
           ],
         ),
         Chord(
           name: 'C minor',
           notes: [
-            notes[NoteName.c3]!,
-            notes[NoteName.d3s]!,
-            notes[NoteName.g3]!,
+            notes[48]!,
+            notes[51]!,
+            notes[55]!,
           ],
         ),
         Chord(
           name: 'C7',
           notes: [
-            notes[NoteName.c3]!,
-            notes[NoteName.d3s]!,
-            notes[NoteName.g3]!,
-            notes[NoteName.a3]!,
+            notes[48]!,
+            notes[52]!,
+            notes[55]!,
+            notes[57]!,
           ],
         ),
       ];

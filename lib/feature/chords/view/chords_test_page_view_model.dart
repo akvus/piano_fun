@@ -1,12 +1,13 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:piano/piano.dart';
 import 'package:piano_chords_test/feature/chords/data/chord_repository.dart';
 import 'package:piano_chords_test/feature/chords/data/midi_repository.dart';
 import 'package:piano_chords_test/feature/chords/domain/chord.dart';
 import 'package:piano_chords_test/feature/chords/domain/match_chord_use_case.dart';
-import 'package:piano_chords_test/feature/chords/domain/note.dart';
 import 'package:piano_chords_test/feature/chords/view/chords_test_page_model.dart';
 
 enum MidiSetUpChangeEvent { deviceFound, deviceLost }
@@ -51,11 +52,14 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
 
     _midiDataReceiverSub = _midiRepository.notesStream?.listen(
       (note) => _onNoteReceived(note),
-    );
+    )?..onError((e) {
+        print('Error $e');
+      });
   }
 
   @override
   void dispose() {
+    print('dispose');
     _midiSetupChangeSub?.cancel();
     _midiDataReceiverSub?.cancel();
     super.dispose();
@@ -111,34 +115,57 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
     state = state!.copyWith(selectedDevice: device);
   }
 
-  void onActionButtonPressed() {
+  Future<void> onActionButtonPressed() async {
     final currentState = state!;
 
     if (currentState.selectedDevice == null) {
-      // TODO display error - maybe as the next status 'deviceNotSelected'
+      // TODO display info to select a device
     } else {
-      final status = currentState.status == ConnectionStatus.connected
-          ? ConnectionStatus.disconnected
-          : ConnectionStatus.connected;
-      final chord = _chordRepository.random;
-
-      state = currentState.copyWith(
-        status: status,
-        expectedChord: chord,
-        playedNotes: [],
-      );
+      switch (currentState.status) {
+        case ConnectionStatus.noDevices:
+          // TODO: display some message relevant
+          break;
+        case ConnectionStatus.disconnected:
+          await _start();
+          break;
+        case ConnectionStatus.connected:
+          _stop();
+          break;
+      }
     }
   }
 
-  void _onNoteReceived(Note note) {
+  Future<void> _start() async {
+    assert(state?.selectedDevice != null);
+
+    await _midiRepository.connect(state!.selectedDevice!);
+
+    state = state!.copyWith(
+      status: ConnectionStatus.connected,
+      expectedChord: _chordRepository.random,
+      playedNotes: [],
+    );
+  }
+
+  void _stop() {
+    state = state!.copyWith(
+      status: ConnectionStatus.disconnected,
+      expectedChord: null,
+      playedNotes: [],
+    );
+  }
+
+  void _onNoteReceived(NotePosition note) {
     final currentState = state!;
 
     if (currentState.status != ConnectionStatus.connected) {
       return;
     }
 
+    debugPrint('Note received: ${note.name}');
+
     Chord chord = currentState.expectedChord!;
-    List<Note> playedNotes = [note, ...currentState.playedNotes];
+    List<NotePosition> playedNotes = [note, ...currentState.playedNotes];
 
     final chordMatch = _matchChordUseCase(
         chord: currentState.expectedChord!, notes: playedNotes);
@@ -158,6 +185,9 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
         break;
     }
 
-    state = currentState.copyWith(expectedChord: chord, playedNotes: []);
+    state = currentState.copyWith(
+      expectedChord: chord,
+      playedNotes: playedNotes,
+    );
   }
 }

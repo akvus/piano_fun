@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:piano/piano.dart';
 import 'package:piano_chords_test/feature/chords/domain/chord.dart';
-import 'package:piano_chords_test/feature/chords/domain/note.dart';
 
 final matchChordUseCaseProvider =
     Provider.autoDispose((ref) => MatchChordUseCase());
@@ -8,7 +8,7 @@ final matchChordUseCaseProvider =
 enum ChordMatch { matched, partial, failed }
 
 class MatchChordUseCase {
-  ChordMatch call({required Chord chord, required List<Note> notes}) {
+  ChordMatch call({required Chord chord, required List<NotePosition> notes}) {
     int matchesCount = 0;
 
     for (final note in notes) {

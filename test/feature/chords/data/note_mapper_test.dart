@@ -3,9 +3,9 @@ import 'dart:typed_data';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:piano/piano.dart';
 import 'package:piano_chords_test/feature/chords/data/note_mapper.dart';
 import 'package:piano_chords_test/feature/chords/data/note_repository.dart';
-import 'package:piano_chords_test/feature/chords/domain/note.dart';
 
 import '../../../_mock/midi_packet.mock.dart';
 
@@ -26,12 +26,12 @@ void main() {
         reset(mockedMidiPacket);
       });
 
-      test('map maps from $MidiPacket to $Note', () {
+      test('map maps from $MidiPacket to $NotePosition', () {
         mockedMidiPacket.mockData(Uint8List.fromList([1, 48, 3]));
 
         final actual = noteMapper.map(mockedMidiPacket);
 
-        expect(actual, const Note(name: 'C3', code: 48));
+        expect(actual, NotePosition(note: Note.C, octave: 3));
       });
 
       test('should throw an exception when a note is not found', () {

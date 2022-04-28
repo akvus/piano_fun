@@ -83,7 +83,7 @@ class _PianoWidget extends ConsumerWidget {
     final model = ref.watch(chordsTestPageViewModelProvder)!;
 
     return InteractivePiano(
-      highlightedNotes: [NotePosition(note: Note.C, octave: 3)],
+      highlightedNotes: model.playedNotes,
       naturalColor: Colors.white,
       accidentalColor: Colors.black,
       keyWidth: 50,

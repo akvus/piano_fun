@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Chord {
   String get name => throw _privateConstructorUsedError;
-  List<Note> get notes => throw _privateConstructorUsedError;
+  List<NotePosition> get notes => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChordCopyWith<Chord> get copyWith => throw _privateConstructorUsedError;
@@ -27,7 +27,7 @@ mixin _$Chord {
 abstract class $ChordCopyWith<$Res> {
   factory $ChordCopyWith(Chord value, $Res Function(Chord) then) =
       _$ChordCopyWithImpl<$Res>;
-  $Res call({String name, List<Note> notes});
+  $Res call({String name, List<NotePosition> notes});
 }
 
 /// @nodoc
@@ -51,7 +51,7 @@ class _$ChordCopyWithImpl<$Res> implements $ChordCopyWith<$Res> {
       notes: notes == freezed
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
-              as List<Note>,
+              as List<NotePosition>,
     ));
   }
 }
@@ -61,7 +61,7 @@ abstract class _$ChordsCopyWith<$Res> implements $ChordCopyWith<$Res> {
   factory _$ChordsCopyWith(_Chords value, $Res Function(_Chords) then) =
       __$ChordsCopyWithImpl<$Res>;
   @override
-  $Res call({String name, List<Note> notes});
+  $Res call({String name, List<NotePosition> notes});
 }
 
 /// @nodoc
@@ -86,7 +86,7 @@ class __$ChordsCopyWithImpl<$Res> extends _$ChordCopyWithImpl<$Res>
       notes: notes == freezed
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
-              as List<Note>,
+              as List<NotePosition>,
     ));
   }
 }
@@ -94,14 +94,14 @@ class __$ChordsCopyWithImpl<$Res> extends _$ChordCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Chords implements _Chords {
-  const _$_Chords({required this.name, required final List<Note> notes})
+  const _$_Chords({required this.name, required final List<NotePosition> notes})
       : _notes = notes;
 
   @override
   final String name;
-  final List<Note> _notes;
+  final List<NotePosition> _notes;
   @override
-  List<Note> get notes {
+  List<NotePosition> get notes {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_notes);
   }
@@ -135,12 +135,12 @@ class _$_Chords implements _Chords {
 abstract class _Chords implements Chord {
   const factory _Chords(
       {required final String name,
-      required final List<Note> notes}) = _$_Chords;
+      required final List<NotePosition> notes}) = _$_Chords;
 
   @override
   String get name => throw _privateConstructorUsedError;
   @override
-  List<Note> get notes => throw _privateConstructorUsedError;
+  List<NotePosition> get notes => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ChordsCopyWith<_Chords> get copyWith => throw _privateConstructorUsedError;
