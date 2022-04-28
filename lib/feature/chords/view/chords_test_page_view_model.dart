@@ -156,6 +156,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
 
   void _onNoteReceived(NotePosition note) {
     if (state.status != ConnectionStatus.connected) {
+      debugPrint('Not connected, then why are we getting notes?');
       return;
     }
 
@@ -165,9 +166,11 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
     List<NotePosition> playedNotes = [note, ...state.playedNotes];
 
     final chordMatch = _matchChordUseCase(
-      chord: state.expectedChord!,
+      chord: chord,
       notes: playedNotes,
     );
+
+    debugPrint('Chord matched with $chordMatch');
 
     switch (chordMatch) {
       case ChordMatch.matched:
