@@ -15,7 +15,7 @@ class NoteMapper {
   final NoteRepository _noteRepository;
 
   NotePosition map(MidiPacket from) {
-    final code = from.data[noteCodePositionAtMidiData];
+    final code = from.data[midiPacketNoteIndex];
 
     final note = _noteRepository.find(code);
     if (note == null) {

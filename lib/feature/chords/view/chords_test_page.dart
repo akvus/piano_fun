@@ -9,7 +9,6 @@ import 'package:piano_chords_test/feature/chords/view/chords_test_page_view_mode
 // TODO proper communication to the user about failure, success
 // TODO improve the status information user is presented with
 // TODO add clef
-// TODO ability to use the virtual piano (with sound?)
 
 class ChordsTestPage extends StatelessWidget {
   const ChordsTestPage({Key? key}) : super(key: key);
