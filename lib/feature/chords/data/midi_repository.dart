@@ -11,8 +11,8 @@ final midiRepositoryProvider = Provider.autoDispose((ref) => MidiRepository(
       ref.read(noteMapperProvider),
     ));
 
-const statusPositionAtMidiData = 0;
-const noteCodePositionAtMidiData = 1;
+const midiPacketStatusIndex = 0;
+const midiPacketNoteIndex = 1;
 
 class MidiRepository {
   MidiRepository(
