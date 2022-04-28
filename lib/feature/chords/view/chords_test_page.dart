@@ -23,7 +23,7 @@ class ChordsTestPage extends StatelessWidget {
 
           return Column(
             children: const [
-              Expanded(child: _ThePianoWidget()),
+              Expanded(child: _PianoWidget()),
               _ControlRowWidget(),
             ],
           );
@@ -75,11 +75,13 @@ class _RequestedChordWidget extends ConsumerWidget {
   }
 }
 
-class _ThePianoWidget extends ConsumerWidget {
-  const _ThePianoWidget({Key? key}) : super(key: key);
+class _PianoWidget extends ConsumerWidget {
+  const _PianoWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final model = ref.watch(chordsTestPageViewModelProvder)!;
+
     return InteractivePiano(
       highlightedNotes: [NotePosition(note: Note.C, octave: 3)],
       naturalColor: Colors.white,
@@ -149,7 +151,7 @@ class _TheButtonWidget extends ConsumerWidget {
 
     return ElevatedButton(
       child: Text(text),
-      onPressed: () => viewModel.onStartPressed(),
+      onPressed: () => viewModel.onActionButtonPressed(),
     );
   }
 }

@@ -20,6 +20,7 @@ mixin _$ChordsTestPageModel {
   ConnectionStatus get status => throw _privateConstructorUsedError;
   MidiDevice? get selectedDevice => throw _privateConstructorUsedError;
   Chord? get expectedChord => throw _privateConstructorUsedError;
+  List<Note> get playedNotes => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChordsTestPageModelCopyWith<ChordsTestPageModel> get copyWith =>
@@ -35,7 +36,8 @@ abstract class $ChordsTestPageModelCopyWith<$Res> {
       {List<MidiDevice> devices,
       ConnectionStatus status,
       MidiDevice? selectedDevice,
-      Chord? expectedChord});
+      Chord? expectedChord,
+      List<Note> playedNotes});
 
   $ChordCopyWith<$Res>? get expectedChord;
 }
@@ -55,6 +57,7 @@ class _$ChordsTestPageModelCopyWithImpl<$Res>
     Object? status = freezed,
     Object? selectedDevice = freezed,
     Object? expectedChord = freezed,
+    Object? playedNotes = freezed,
   }) {
     return _then(_value.copyWith(
       devices: devices == freezed
@@ -73,6 +76,10 @@ class _$ChordsTestPageModelCopyWithImpl<$Res>
           ? _value.expectedChord
           : expectedChord // ignore: cast_nullable_to_non_nullable
               as Chord?,
+      playedNotes: playedNotes == freezed
+          ? _value.playedNotes
+          : playedNotes // ignore: cast_nullable_to_non_nullable
+              as List<Note>,
     ));
   }
 
@@ -99,7 +106,8 @@ abstract class _$ChordsTestePageModelCopyWith<$Res>
       {List<MidiDevice> devices,
       ConnectionStatus status,
       MidiDevice? selectedDevice,
-      Chord? expectedChord});
+      Chord? expectedChord,
+      List<Note> playedNotes});
 
   @override
   $ChordCopyWith<$Res>? get expectedChord;
@@ -122,6 +130,7 @@ class __$ChordsTestePageModelCopyWithImpl<$Res>
     Object? status = freezed,
     Object? selectedDevice = freezed,
     Object? expectedChord = freezed,
+    Object? playedNotes = freezed,
   }) {
     return _then(_ChordsTestePageModel(
       devices: devices == freezed
@@ -140,6 +149,10 @@ class __$ChordsTestePageModelCopyWithImpl<$Res>
           ? _value.expectedChord
           : expectedChord // ignore: cast_nullable_to_non_nullable
               as Chord?,
+      playedNotes: playedNotes == freezed
+          ? _value.playedNotes
+          : playedNotes // ignore: cast_nullable_to_non_nullable
+              as List<Note>,
     ));
   }
 }
@@ -151,8 +164,10 @@ class _$_ChordsTestePageModel implements _ChordsTestePageModel {
       {required final List<MidiDevice> devices,
       required this.status,
       required this.selectedDevice,
-      required this.expectedChord})
-      : _devices = devices;
+      required this.expectedChord,
+      required final List<Note> playedNotes})
+      : _devices = devices,
+        _playedNotes = playedNotes;
 
   final List<MidiDevice> _devices;
   @override
@@ -167,10 +182,16 @@ class _$_ChordsTestePageModel implements _ChordsTestePageModel {
   final MidiDevice? selectedDevice;
   @override
   final Chord? expectedChord;
+  final List<Note> _playedNotes;
+  @override
+  List<Note> get playedNotes {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_playedNotes);
+  }
 
   @override
   String toString() {
-    return 'ChordsTestPageModel(devices: $devices, status: $status, selectedDevice: $selectedDevice, expectedChord: $expectedChord)';
+    return 'ChordsTestPageModel(devices: $devices, status: $status, selectedDevice: $selectedDevice, expectedChord: $expectedChord, playedNotes: $playedNotes)';
   }
 
   @override
@@ -183,7 +204,9 @@ class _$_ChordsTestePageModel implements _ChordsTestePageModel {
             const DeepCollectionEquality()
                 .equals(other.selectedDevice, selectedDevice) &&
             const DeepCollectionEquality()
-                .equals(other.expectedChord, expectedChord));
+                .equals(other.expectedChord, expectedChord) &&
+            const DeepCollectionEquality()
+                .equals(other.playedNotes, playedNotes));
   }
 
   @override
@@ -192,7 +215,8 @@ class _$_ChordsTestePageModel implements _ChordsTestePageModel {
       const DeepCollectionEquality().hash(devices),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(selectedDevice),
-      const DeepCollectionEquality().hash(expectedChord));
+      const DeepCollectionEquality().hash(expectedChord),
+      const DeepCollectionEquality().hash(playedNotes));
 
   @JsonKey(ignore: true)
   @override
@@ -206,7 +230,8 @@ abstract class _ChordsTestePageModel implements ChordsTestPageModel {
       {required final List<MidiDevice> devices,
       required final ConnectionStatus status,
       required final MidiDevice? selectedDevice,
-      required final Chord? expectedChord}) = _$_ChordsTestePageModel;
+      required final Chord? expectedChord,
+      required final List<Note> playedNotes}) = _$_ChordsTestePageModel;
 
   @override
   List<MidiDevice> get devices => throw _privateConstructorUsedError;
@@ -216,6 +241,8 @@ abstract class _ChordsTestePageModel implements ChordsTestPageModel {
   MidiDevice? get selectedDevice => throw _privateConstructorUsedError;
   @override
   Chord? get expectedChord => throw _privateConstructorUsedError;
+  @override
+  List<Note> get playedNotes => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ChordsTestePageModelCopyWith<_ChordsTestePageModel> get copyWith =>
