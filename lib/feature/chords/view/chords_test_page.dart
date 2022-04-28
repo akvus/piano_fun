@@ -6,11 +6,11 @@ import 'package:piano_chords_test/feature/chords/domain/match_chord_use_case.dar
 import 'package:piano_chords_test/feature/chords/view/chords_test_page_model.dart';
 import 'package:piano_chords_test/feature/chords/view/chords_test_page_view_model.dart';
 
-// TODO updating piano does not work too well yet
-// TODO when already connected usb, and app starts -> not added to list
-
-// TODO consider adding a clef too
-// TODO ability to play on the keyboard???? or play the sound?
+// TODO on start connected device not listened
+// TODO proper communication to the user about failure, success
+// TODO improve the status information user is presented with
+// TODO add clef
+// TODO ability to use the virtual piano (with sound?)
 
 class ChordsTestPage extends StatelessWidget {
   const ChordsTestPage({Key? key}) : super(key: key);

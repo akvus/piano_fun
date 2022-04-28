@@ -23,6 +23,7 @@ class MidiRepository {
   Stream<NotePosition>? get notesStream =>
       // Note: There are two MIDI events for each key pressed: on, off.
       // Currently we need not to know this, so we can skip the off events
+      // TODO test
       _midiCommand.onMidiDataReceived
           ?.distinct((prev, current) =>
               prev.data[noteCodePositionAtMidiData] ==

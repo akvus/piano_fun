@@ -21,7 +21,6 @@ final chordsTestPageViewModelProvder =
   ),
 );
 
-// TODO can the model be non-nullable?
 // TODO too late for TDD, but maybe test some :D
 class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
   ChordsTestPageViewModel(
