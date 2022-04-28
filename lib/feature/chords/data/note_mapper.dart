@@ -1,4 +1,5 @@
 import 'package:flutter_midi_command/flutter_midi_command.dart';
+import 'package:flutter_midi_command/flutter_midi_command_messages.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano/piano.dart';
 import 'package:piano_chords_test/feature/chords/data/midi_repository.dart';
@@ -15,7 +16,6 @@ class NoteMapper {
 
   NotePosition map(MidiPacket from) {
     final code = from.data[noteCodePositionAtMidiData];
-    print(from.data.toString);
 
     final note = _noteRepository.find(code);
     if (note == null) {
