@@ -75,7 +75,6 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
     final devices = await _midiCommand.devices ?? [];
     ConnectionStatus status;
     MidiDevice? selectedDevice;
-    Chord? chord;
 
     try {
       selectedDevice = devices.firstWhere(
@@ -89,7 +88,6 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
     } else if (selectedDevice != null &&
         currentState.status == ConnectionStatus.connected) {
       status = ConnectionStatus.connected;
-      chord = _chordRepository.random;
     } else {
       status = ConnectionStatus.disconnected;
     }
@@ -98,7 +96,6 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
       devices: devices,
       status: status,
       selectedDevice: selectedDevice,
-      expectedChord: chord,
     );
   }
 
@@ -115,7 +112,9 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel?> {
       final status = currentState.status == ConnectionStatus.connected
           ? ConnectionStatus.disconnected
           : ConnectionStatus.connected;
-      state = currentState.copyWith(status: status);
+      final chord = _chordRepository.random;
+
+      state = currentState.copyWith(status: status, expectedChord: chord);
     }
   }
 

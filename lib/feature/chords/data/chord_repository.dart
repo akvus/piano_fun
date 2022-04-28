@@ -24,7 +24,7 @@ class ChordRepository {
 
   List<Chord>? _cache;
 
-  Chord get random => all[_randomizer.nextInt(all.length - 1)];
+  Chord get random => all[_randomizer.nextInt(all.length)];
 
   List<Chord> get all {
     if (_cache == null) {
@@ -33,7 +33,7 @@ class ChordRepository {
       _cache = [
         // TODO fill in xDD
         Chord(
-          name: 'C maj',
+          name: 'C major',
           notes: [
             notes[NoteName.c3]!,
             notes[NoteName.e3]!,
@@ -41,11 +41,20 @@ class ChordRepository {
           ],
         ),
         Chord(
-          name: 'C min',
+          name: 'C minor',
           notes: [
             notes[NoteName.c3]!,
             notes[NoteName.d3s]!,
             notes[NoteName.g3]!,
+          ],
+        ),
+        Chord(
+          name: 'C7',
+          notes: [
+            notes[NoteName.c3]!,
+            notes[NoteName.d3s]!,
+            notes[NoteName.g3]!,
+            notes[NoteName.a3]!,
           ],
         ),
       ];
