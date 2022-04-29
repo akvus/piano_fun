@@ -6,10 +6,6 @@ import 'package:piano_chords_test/feature/chords/domain/match_chord_use_case.dar
 import 'package:piano_chords_test/feature/chords/view/chords_test_page_model.dart';
 import 'package:piano_chords_test/feature/chords/view/chords_test_page_view_model.dart';
 
-// TODO proper communication to the user about failure, success
-// TODO improve the status information user is presented with
-// TODO add clef
-
 class ChordsTestPage extends StatelessWidget {
   const ChordsTestPage({Key? key}) : super(key: key);
 

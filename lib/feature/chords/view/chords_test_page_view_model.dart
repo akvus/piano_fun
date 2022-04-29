@@ -119,12 +119,9 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
   }
 
   Future<void> onActionButtonPressed() async {
-    if (state.selectedDevice == null) {
-      // TODO display info to select a device
-    } else {
+    if (state.selectedDevice != null) {
       switch (state.connectionStatus) {
         case ConnectionStatus.noDevices:
-          // TODO: display some message relevant
           break;
         case ConnectionStatus.disconnected:
           await _start();
