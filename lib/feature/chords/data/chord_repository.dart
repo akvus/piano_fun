@@ -13,12 +13,10 @@ final chordRepositoryProvider = Provider.autoDispose(
 );
 
 const _baseOctave = 4;
-const _nextOctave = 5;
+const _nextOctave = _baseOctave + 1;
 
 class ChordRepository {
-  ChordRepository(
-    this._randomizer,
-  );
+  ChordRepository(this._randomizer);
 
   final Random _randomizer;
 

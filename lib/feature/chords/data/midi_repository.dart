@@ -22,6 +22,7 @@ class MidiRepository {
 
   final MidiCommand _midiCommand;
   final NoteMapper _noteMapper;
+
   Stream<NotePosition>? get notesStream =>
       // Note: There are two MIDI events for each key pressed: on, off.
       // Currently we need not to know this, so we can skip the off events
@@ -32,12 +33,11 @@ class MidiRepository {
           );
 
   @visibleForTesting
-  bool isNoteOnEvent(int data) {
-    return data.checkBit(7) &&
-        !data.checkBit(6) &&
-        !data.checkBit(5) &&
-        !data.checkBit(4);
-  }
+  bool isNoteOnEvent(int data) =>
+      data.isBitSet(7) &&
+      !data.isBitSet(6) &&
+      !data.isBitSet(5) &&
+      !data.isBitSet(4);
 
   Stream<String>? get midiSetupChangeStream => _midiCommand.onMidiSetupChanged;
 
@@ -47,5 +47,6 @@ class MidiRepository {
   Future<void> connect(MidiDevice device) =>
       _midiCommand.connectToDevice(device);
 
-  void addVirtualDevice() => _midiCommand.addVirtualDevice(name: 'Virtual');
+  void addVirtualDevice() =>
+      _midiCommand.addVirtualDevice(name: 'Virtual device');
 }

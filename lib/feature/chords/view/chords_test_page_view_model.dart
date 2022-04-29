@@ -10,6 +10,7 @@ import 'package:fun_with_piano/feature/chords/domain/chord.dart';
 import 'package:fun_with_piano/feature/chords/domain/match_chord_use_case.dart';
 import 'package:fun_with_piano/feature/chords/view/chords_test_page_model.dart';
 import 'package:fun_with_piano/feature/chords/view/game_state.dart';
+import 'package:time/time.dart';
 
 enum MidiSetUpChangeEvent { deviceFound, deviceLost }
 
@@ -22,7 +23,6 @@ final chordsTestPageViewModelProvder =
   ),
 );
 
-// TODO too late for TDD, but maybe test some :D
 class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
   ChordsTestPageViewModel(
     this._midiRepository,
@@ -47,20 +47,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
   late final StreamSubscription? _midiDataReceiverSub;
 
   Future<void> onInit() async {
-    _midiSetupChangeSub =
-        _midiRepository.midiSetupChangeStream?.listen((event) {
-      if (event == MidiSetUpChangeEvent.deviceFound.name ||
-          event == MidiSetUpChangeEvent.deviceLost.name) {
-        _onDevicesUpdated();
-      }
-    });
-
-    _midiDataReceiverSub = _midiRepository.notesStream?.listen(
-      (note) => _onNoteReceived(note),
-    )?..onError((e) {
-        debugPrint('Error $e');
-      });
-
+    _listenToMidiCommands();
     await _initDevices();
   }
 
@@ -71,18 +58,18 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
     super.dispose();
   }
 
-  Future<void> _initDevices() async {
-    _midiRepository.addVirtualDevice();
-    final devices = await _midiRepository.devices;
+  void _listenToMidiCommands() {
+    _midiSetupChangeSub =
+        _midiRepository.midiSetupChangeStream?.listen((event) {
+      if (event == MidiSetUpChangeEvent.deviceFound.name ||
+          event == MidiSetUpChangeEvent.deviceLost.name) {
+        _onDevicesUpdated();
+      }
+    });
 
-    final status = devices.isEmpty
-        ? ConnectionStatus.noDevices
-        : ConnectionStatus.disconnected;
-
-    state = state.copyWith(
-      devices: devices,
-      connectionStatus: status,
-    );
+    _midiDataReceiverSub = _midiRepository.notesStream?.listen(
+      (note) => _onNoteReceived(note),
+    )?..onError((e) => debugPrint('Error: $e'));
   }
 
   Future<void> _onDevicesUpdated() async {
@@ -92,7 +79,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
 
     try {
       selectedDevice = devices.firstWhere(
-        (element) => element.name == state.selectedDevice!.name,
+        (device) => device.name == state.selectedDevice!.name,
       );
     } catch (e) {
       selectedDevice == null;
@@ -111,47 +98,6 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
       devices: devices,
       connectionStatus: status,
       selectedDevice: selectedDevice,
-    );
-  }
-
-  void onDeviceSelected(MidiDevice? device) {
-    state = state.copyWith(selectedDevice: device);
-  }
-
-  Future<void> onActionButtonPressed() async {
-    if (state.selectedDevice != null) {
-      switch (state.connectionStatus) {
-        case ConnectionStatus.noDevices:
-          break;
-        case ConnectionStatus.disconnected:
-          await _start();
-          break;
-        case ConnectionStatus.connected:
-          _stop();
-          break;
-      }
-    }
-  }
-
-  Future<void> _start() async {
-    assert(state.selectedDevice != null);
-
-    await _midiRepository.connect(state.selectedDevice!);
-
-    state = state.copyWith(
-      connectionStatus: ConnectionStatus.connected,
-      expectedChord: _chordRepository.random,
-      playedNotes: [],
-      gameState: GameState.newGame(),
-    );
-  }
-
-  void _stop() {
-    state = state.copyWith(
-      connectionStatus: ConnectionStatus.disconnected,
-      expectedChord: null,
-      playedNotes: [],
-      gameState: null,
     );
   }
 
@@ -176,9 +122,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
 
     // Delay used to display all of the played notes for a while
     // before piano is cleared
-    // ignore: prefer_function_declarations_over_variables
-    final Future Function() delay =
-        () => Future.delayed(const Duration(milliseconds: 200));
+    Future delay() => Future.delayed(200.milliseconds);
 
     switch (chordMatch) {
       case ChordMatch.matched:
@@ -190,7 +134,6 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
         gameState = gameState.addSuccess();
         break;
       case ChordMatch.partial:
-        // wait for following notes
         break;
       case ChordMatch.failed:
         state = state.copyWith(playedNotes: playedNotes);
@@ -205,6 +148,59 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
       expectedChord: chord,
       playedNotes: playedNotes,
       gameState: gameState,
+    );
+  }
+
+  Future<void> _initDevices() async {
+    _midiRepository.addVirtualDevice();
+
+    final devices = await _midiRepository.devices;
+    final status = devices.isEmpty
+        ? ConnectionStatus.noDevices
+        : ConnectionStatus.disconnected;
+
+    state = state.copyWith(
+      devices: devices,
+      connectionStatus: status,
+    );
+  }
+
+  void onDeviceSelected(MidiDevice? device) {
+    state = state.copyWith(selectedDevice: device);
+  }
+
+  Future<void> onActionButtonPressed() async {
+    if (state.selectedDevice != null) {
+      switch (state.connectionStatus) {
+        case ConnectionStatus.noDevices:
+          break;
+        case ConnectionStatus.disconnected:
+          await _start();
+          break;
+        case ConnectionStatus.connected:
+          _stop();
+          break;
+      }
+    }
+  }
+
+  Future<void> _start() async {
+    await _midiRepository.connect(state.selectedDevice!);
+
+    state = state.copyWith(
+      connectionStatus: ConnectionStatus.connected,
+      expectedChord: _chordRepository.random,
+      playedNotes: [],
+      gameState: GameState.newGame(),
+    );
+  }
+
+  void _stop() {
+    state = state.copyWith(
+      connectionStatus: ConnectionStatus.disconnected,
+      expectedChord: null,
+      playedNotes: [],
+      gameState: null,
     );
   }
 

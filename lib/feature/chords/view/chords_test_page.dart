@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano/piano.dart';
-import 'package:fun_with_piano/feature/chords/domain/match_chord_use_case.dart';
 import 'package:fun_with_piano/feature/chords/view/chords_test_page_model.dart';
 import 'package:fun_with_piano/feature/chords/view/chords_test_page_view_model.dart';
 
@@ -11,44 +10,49 @@ class ChordsTestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: Consumer(builder: (context, ref, child) {
-          ref.watch(matchChordUseCaseProvider);
-
-          return Column(
+        body: Consumer(
+          builder: (context, ref, child) => Column(
             children: const [
               Expanded(child: _PianoWidget()),
               _ControlRowWidget(),
             ],
-          );
-        }),
+          ),
+        ),
       );
 }
 
-class _ControlRowWidget extends ConsumerWidget {
+class _ControlRowWidget extends StatelessWidget {
   const _ControlRowWidget({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => Row(
-        children: [
-          const SizedBox(width: 16),
-          const SizedBox(width: 250, child: _GameStatusWidget()),
-          const Spacer(),
-          const _RequestedChordWidget(),
-          const Spacer(),
-          SizedBox(
-            width: 250,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: const [
-                Expanded(child: _DeviceSelectorWidget()),
-                SizedBox(width: 16),
-                _TheButtonWidget(),
-              ],
-            ),
+  Widget build(BuildContext context) {
+    const double horizontalPadding = 16;
+    // an ambiguous number,
+    // could be improved to scale on smaller devices
+    const double sidePanelWidth = 250;
+
+    return Row(
+      children: [
+        const SizedBox(width: horizontalPadding),
+        const SizedBox(width: sidePanelWidth, child: _GameStatusWidget()),
+        const Spacer(),
+        const _RequestedChordWidget(),
+        const Spacer(),
+        SizedBox(
+          width: sidePanelWidth,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Expanded(child: _DeviceSelectorWidget()),
+              SizedBox(width: horizontalPadding),
+              _TheButtonWidget(),
+            ],
           ),
-          const SizedBox(width: 16),
-        ],
-      );
+        ),
+        const SizedBox(width: horizontalPadding),
+      ],
+    );
+  }
 }
 
 class _RequestedChordWidget extends ConsumerWidget {
@@ -60,10 +64,7 @@ class _RequestedChordWidget extends ConsumerWidget {
 
     return Text(
       model.expectedChord?.name ?? 'Ready?',
-      style: const TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 18,
-      ),
+      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
     );
   }
 }
@@ -95,7 +96,7 @@ class _GameStatusWidget extends ConsumerWidget {
     final model = ref.watch(chordsTestPageViewModelProvder);
 
     String text;
-    Color color = Colors.red;
+    Color color;
     switch (model.connectionStatus) {
       case ConnectionStatus.connected:
         final gameState = model.gameState!;
@@ -107,10 +108,11 @@ class _GameStatusWidget extends ConsumerWidget {
         break;
       case ConnectionStatus.disconnected:
         text = 'Select device and start';
-
+        color = Colors.red;
         break;
       case ConnectionStatus.noDevices:
         text = 'No devices';
+        color = Colors.grey;
         break;
     }
 
@@ -160,11 +162,10 @@ class _DeviceSelectorWidget extends ConsumerWidget {
     final viewModel = ref.watch(chordsTestPageViewModelProvder.notifier);
     final model = ref.watch(chordsTestPageViewModelProvder);
 
-    final devices = model.devices;
     return DropdownButton<MidiDevice?>(
       value: model.selectedDevice,
       isExpanded: true,
-      items: devices
+      items: model.devices
           .map(
             (device) => DropdownMenuItem<MidiDevice?>(
               value: device,

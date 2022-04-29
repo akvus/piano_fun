@@ -1,5 +1,4 @@
 import 'package:flutter_midi_command/flutter_midi_command.dart';
-import 'package:flutter_midi_command/flutter_midi_command_messages.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano/piano.dart';
 import 'package:fun_with_piano/feature/chords/data/midi_repository.dart';
@@ -10,7 +9,7 @@ final noteMapperProvider = Provider.autoDispose((ref) => NoteMapper(
     ));
 
 class NoteMapper {
-  NoteMapper(this._noteRepository);
+  const NoteMapper(this._noteRepository);
 
   final NoteRepository _noteRepository;
 

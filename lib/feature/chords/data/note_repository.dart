@@ -12,13 +12,15 @@ class NoteRepository {
     if (_cache == null) {
       final map = <int, NotePosition>{};
 
-      const startWithOctave = 3;
-      const octaveCount = 2;
-      const c3Code = 48;
+      const startWithOctave = 1;
+      const octaveCount = 7;
+      const c1Code = 24;
 
+      // Note: this skips A0, A0#, B0 and C8 - which could be a problem
+      // if other features are added to the app
       for (int i = 0; i < octaveCount; i++) {
         final octave = startWithOctave + i;
-        int noteCode = c3Code + i * notesInOctave;
+        int noteCode = c1Code + i * notesInOctave;
 
         map[noteCode++] = NotePosition(note: Note.C, octave: octave);
         map[noteCode++] = NotePosition(

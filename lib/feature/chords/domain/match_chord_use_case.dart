@@ -9,7 +9,10 @@ final matchChordUseCaseProvider = Provider.autoDispose(
 enum ChordMatch { matched, partial, failed }
 
 class MatchChordUseCase {
-  ChordMatch call({required Chord chord, required List<NotePosition> notes}) {
+  ChordMatch call({
+    required Chord chord,
+    required List<NotePosition> notes,
+  }) {
     for (final note in notes) {
       if (!chord.notes.contains(note) &&
           !chord.notes.contains(note.alternativeAccidental)) {
