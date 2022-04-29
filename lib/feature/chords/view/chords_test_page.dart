@@ -100,9 +100,13 @@ class _GameStatusWidget extends ConsumerWidget {
 
     String text;
     Color color = Colors.red;
-    switch (model.status) {
+    switch (model.connectionStatus) {
       case ConnectionStatus.connected:
-        text = 'Playing';
+        final gameState = model.gameState!;
+        final successRate = gameState.successRate.toStringAsFixed(2);
+
+        text =
+            '${gameState.successCount} / ${gameState.gamesCount} ($successRate%)';
         color = Colors.green;
         break;
       case ConnectionStatus.disconnected:
@@ -133,7 +137,7 @@ class _TheButtonWidget extends ConsumerWidget {
     final model = ref.watch(chordsTestPageViewModelProvder);
 
     String text;
-    switch (model.status) {
+    switch (model.connectionStatus) {
       case ConnectionStatus.connected:
         text = 'Stop';
         break;

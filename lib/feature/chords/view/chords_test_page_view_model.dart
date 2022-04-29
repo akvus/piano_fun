@@ -9,6 +9,7 @@ import 'package:piano_chords_test/feature/chords/data/midi_repository.dart';
 import 'package:piano_chords_test/feature/chords/domain/chord.dart';
 import 'package:piano_chords_test/feature/chords/domain/match_chord_use_case.dart';
 import 'package:piano_chords_test/feature/chords/view/chords_test_page_model.dart';
+import 'package:piano_chords_test/feature/chords/view/game_state.dart';
 
 enum MidiSetUpChangeEvent { deviceFound, deviceLost }
 
@@ -29,10 +30,11 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
     this._matchChordUseCase,
   ) : super(const ChordsTestPageModel(
           devices: [],
-          status: ConnectionStatus.noDevices,
+          connectionStatus: ConnectionStatus.noDevices,
           selectedDevice: null,
           expectedChord: null,
           playedNotes: [],
+          gameState: null,
         )) {
     onInit();
   }
@@ -79,7 +81,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
 
     state = state.copyWith(
       devices: devices,
-      status: status,
+      connectionStatus: status,
     );
   }
 
@@ -99,7 +101,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
     if (devices.isEmpty) {
       status = ConnectionStatus.noDevices;
     } else if (selectedDevice != null &&
-        state.status == ConnectionStatus.connected) {
+        state.connectionStatus == ConnectionStatus.connected) {
       status = ConnectionStatus.connected;
     } else {
       status = ConnectionStatus.disconnected;
@@ -107,7 +109,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
 
     state = state.copyWith(
       devices: devices,
-      status: status,
+      connectionStatus: status,
       selectedDevice: selectedDevice,
     );
   }
@@ -120,7 +122,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
     if (state.selectedDevice == null) {
       // TODO display info to select a device
     } else {
-      switch (state.status) {
+      switch (state.connectionStatus) {
         case ConnectionStatus.noDevices:
           // TODO: display some message relevant
           break;
@@ -140,22 +142,24 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
     await _midiRepository.connect(state.selectedDevice!);
 
     state = state.copyWith(
-      status: ConnectionStatus.connected,
+      connectionStatus: ConnectionStatus.connected,
       expectedChord: _chordRepository.random,
       playedNotes: [],
+      gameState: GameState.newGame(),
     );
   }
 
   void _stop() {
     state = state.copyWith(
-      status: ConnectionStatus.disconnected,
+      connectionStatus: ConnectionStatus.disconnected,
       expectedChord: null,
       playedNotes: [],
+      gameState: null,
     );
   }
 
   void _onNoteReceived(NotePosition note) {
-    if (state.status != ConnectionStatus.connected) {
+    if (state.connectionStatus != ConnectionStatus.connected) {
       debugPrint('Not connected, then why are we getting notes?');
       return;
     }
@@ -164,6 +168,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
 
     Chord chord = state.expectedChord!;
     List<NotePosition> playedNotes = [note, ...state.playedNotes];
+    GameState gameState = state.gameState!;
 
     final chordMatch = _matchChordUseCase(
       chord: chord,
@@ -174,22 +179,23 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
 
     switch (chordMatch) {
       case ChordMatch.matched:
-        // TODO success message
         chord = _chordRepository.random;
         playedNotes.clear();
+        gameState = gameState.addSuccess();
         break;
       case ChordMatch.partial:
         // wait for following notes
         break;
       case ChordMatch.failed:
-        // TODO error message
         playedNotes.clear();
+        gameState = gameState.addFailure();
         break;
     }
 
     state = state.copyWith(
       expectedChord: chord,
       playedNotes: playedNotes,
+      gameState: gameState,
     );
   }
 

@@ -17,10 +17,11 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ChordsTestPageModel {
   List<MidiDevice> get devices => throw _privateConstructorUsedError;
-  ConnectionStatus get status => throw _privateConstructorUsedError;
+  ConnectionStatus get connectionStatus => throw _privateConstructorUsedError;
   MidiDevice? get selectedDevice => throw _privateConstructorUsedError;
   Chord? get expectedChord => throw _privateConstructorUsedError;
   List<NotePosition> get playedNotes => throw _privateConstructorUsedError;
+  GameState? get gameState => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChordsTestPageModelCopyWith<ChordsTestPageModel> get copyWith =>
@@ -34,12 +35,14 @@ abstract class $ChordsTestPageModelCopyWith<$Res> {
       _$ChordsTestPageModelCopyWithImpl<$Res>;
   $Res call(
       {List<MidiDevice> devices,
-      ConnectionStatus status,
+      ConnectionStatus connectionStatus,
       MidiDevice? selectedDevice,
       Chord? expectedChord,
-      List<NotePosition> playedNotes});
+      List<NotePosition> playedNotes,
+      GameState? gameState});
 
   $ChordCopyWith<$Res>? get expectedChord;
+  $GameStateCopyWith<$Res>? get gameState;
 }
 
 /// @nodoc
@@ -54,19 +57,20 @@ class _$ChordsTestPageModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? devices = freezed,
-    Object? status = freezed,
+    Object? connectionStatus = freezed,
     Object? selectedDevice = freezed,
     Object? expectedChord = freezed,
     Object? playedNotes = freezed,
+    Object? gameState = freezed,
   }) {
     return _then(_value.copyWith(
       devices: devices == freezed
           ? _value.devices
           : devices // ignore: cast_nullable_to_non_nullable
               as List<MidiDevice>,
-      status: status == freezed
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
+      connectionStatus: connectionStatus == freezed
+          ? _value.connectionStatus
+          : connectionStatus // ignore: cast_nullable_to_non_nullable
               as ConnectionStatus,
       selectedDevice: selectedDevice == freezed
           ? _value.selectedDevice
@@ -80,6 +84,10 @@ class _$ChordsTestPageModelCopyWithImpl<$Res>
           ? _value.playedNotes
           : playedNotes // ignore: cast_nullable_to_non_nullable
               as List<NotePosition>,
+      gameState: gameState == freezed
+          ? _value.gameState
+          : gameState // ignore: cast_nullable_to_non_nullable
+              as GameState?,
     ));
   }
 
@@ -93,6 +101,17 @@ class _$ChordsTestPageModelCopyWithImpl<$Res>
       return _then(_value.copyWith(expectedChord: value));
     });
   }
+
+  @override
+  $GameStateCopyWith<$Res>? get gameState {
+    if (_value.gameState == null) {
+      return null;
+    }
+
+    return $GameStateCopyWith<$Res>(_value.gameState!, (value) {
+      return _then(_value.copyWith(gameState: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -104,13 +123,16 @@ abstract class _$ChordsTestePageModelCopyWith<$Res>
   @override
   $Res call(
       {List<MidiDevice> devices,
-      ConnectionStatus status,
+      ConnectionStatus connectionStatus,
       MidiDevice? selectedDevice,
       Chord? expectedChord,
-      List<NotePosition> playedNotes});
+      List<NotePosition> playedNotes,
+      GameState? gameState});
 
   @override
   $ChordCopyWith<$Res>? get expectedChord;
+  @override
+  $GameStateCopyWith<$Res>? get gameState;
 }
 
 /// @nodoc
@@ -127,19 +149,20 @@ class __$ChordsTestePageModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? devices = freezed,
-    Object? status = freezed,
+    Object? connectionStatus = freezed,
     Object? selectedDevice = freezed,
     Object? expectedChord = freezed,
     Object? playedNotes = freezed,
+    Object? gameState = freezed,
   }) {
     return _then(_ChordsTestePageModel(
       devices: devices == freezed
           ? _value.devices
           : devices // ignore: cast_nullable_to_non_nullable
               as List<MidiDevice>,
-      status: status == freezed
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
+      connectionStatus: connectionStatus == freezed
+          ? _value.connectionStatus
+          : connectionStatus // ignore: cast_nullable_to_non_nullable
               as ConnectionStatus,
       selectedDevice: selectedDevice == freezed
           ? _value.selectedDevice
@@ -153,6 +176,10 @@ class __$ChordsTestePageModelCopyWithImpl<$Res>
           ? _value.playedNotes
           : playedNotes // ignore: cast_nullable_to_non_nullable
               as List<NotePosition>,
+      gameState: gameState == freezed
+          ? _value.gameState
+          : gameState // ignore: cast_nullable_to_non_nullable
+              as GameState?,
     ));
   }
 }
@@ -162,10 +189,11 @@ class __$ChordsTestePageModelCopyWithImpl<$Res>
 class _$_ChordsTestePageModel implements _ChordsTestePageModel {
   const _$_ChordsTestePageModel(
       {required final List<MidiDevice> devices,
-      required this.status,
+      required this.connectionStatus,
       required this.selectedDevice,
       required this.expectedChord,
-      required final List<NotePosition> playedNotes})
+      required final List<NotePosition> playedNotes,
+      required this.gameState})
       : _devices = devices,
         _playedNotes = playedNotes;
 
@@ -177,7 +205,7 @@ class _$_ChordsTestePageModel implements _ChordsTestePageModel {
   }
 
   @override
-  final ConnectionStatus status;
+  final ConnectionStatus connectionStatus;
   @override
   final MidiDevice? selectedDevice;
   @override
@@ -190,8 +218,11 @@ class _$_ChordsTestePageModel implements _ChordsTestePageModel {
   }
 
   @override
+  final GameState? gameState;
+
+  @override
   String toString() {
-    return 'ChordsTestPageModel(devices: $devices, status: $status, selectedDevice: $selectedDevice, expectedChord: $expectedChord, playedNotes: $playedNotes)';
+    return 'ChordsTestPageModel(devices: $devices, connectionStatus: $connectionStatus, selectedDevice: $selectedDevice, expectedChord: $expectedChord, playedNotes: $playedNotes, gameState: $gameState)';
   }
 
   @override
@@ -200,23 +231,26 @@ class _$_ChordsTestePageModel implements _ChordsTestePageModel {
         (other.runtimeType == runtimeType &&
             other is _ChordsTestePageModel &&
             const DeepCollectionEquality().equals(other.devices, devices) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality()
+                .equals(other.connectionStatus, connectionStatus) &&
             const DeepCollectionEquality()
                 .equals(other.selectedDevice, selectedDevice) &&
             const DeepCollectionEquality()
                 .equals(other.expectedChord, expectedChord) &&
             const DeepCollectionEquality()
-                .equals(other.playedNotes, playedNotes));
+                .equals(other.playedNotes, playedNotes) &&
+            const DeepCollectionEquality().equals(other.gameState, gameState));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(devices),
-      const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(connectionStatus),
       const DeepCollectionEquality().hash(selectedDevice),
       const DeepCollectionEquality().hash(expectedChord),
-      const DeepCollectionEquality().hash(playedNotes));
+      const DeepCollectionEquality().hash(playedNotes),
+      const DeepCollectionEquality().hash(gameState));
 
   @JsonKey(ignore: true)
   @override
@@ -228,21 +262,24 @@ class _$_ChordsTestePageModel implements _ChordsTestePageModel {
 abstract class _ChordsTestePageModel implements ChordsTestPageModel {
   const factory _ChordsTestePageModel(
       {required final List<MidiDevice> devices,
-      required final ConnectionStatus status,
+      required final ConnectionStatus connectionStatus,
       required final MidiDevice? selectedDevice,
       required final Chord? expectedChord,
-      required final List<NotePosition> playedNotes}) = _$_ChordsTestePageModel;
+      required final List<NotePosition> playedNotes,
+      required final GameState? gameState}) = _$_ChordsTestePageModel;
 
   @override
   List<MidiDevice> get devices => throw _privateConstructorUsedError;
   @override
-  ConnectionStatus get status => throw _privateConstructorUsedError;
+  ConnectionStatus get connectionStatus => throw _privateConstructorUsedError;
   @override
   MidiDevice? get selectedDevice => throw _privateConstructorUsedError;
   @override
   Chord? get expectedChord => throw _privateConstructorUsedError;
   @override
   List<NotePosition> get playedNotes => throw _privateConstructorUsedError;
+  @override
+  GameState? get gameState => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ChordsTestePageModelCopyWith<_ChordsTestePageModel> get copyWith =>
