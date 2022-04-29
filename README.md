@@ -1,9 +1,10 @@
-# Piano test
+# Fun with piano
 
-Note: work in progress
+Test how good do you know chords with a digital piano or virtual keyboard.
+
 
 A simple Flutter app. Connect a MIDI device i.e. digital piano and try yourself out.
 
-This is a side project of my. Feel free to do whatever with it, just link to the original. 
+You can build on top of this. If you're planning a release an app with this base, then include me as a co-author or contributor. 
 
-Caveat: This is a minimal set up with no abstractions etc., yet proper architecture. Using Riverpod for DI and StateNotifier for state management.
+Caveat: This is a minimal set up with no abstractions etc., yet proper-ish architecture. Using Riverpod for DI and StateNotifier for state management.

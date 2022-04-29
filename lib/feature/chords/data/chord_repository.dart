@@ -13,7 +13,7 @@ final chordRepositoryProvider = Provider.autoDispose(
 );
 
 const _baseOctave = 4;
-const _nextOctave = _baseOctave + 1;
+const _nextOctave = 5;
 
 class ChordRepository {
   ChordRepository(
