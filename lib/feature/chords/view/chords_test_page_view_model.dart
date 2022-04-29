@@ -158,7 +158,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
     );
   }
 
-  void _onNoteReceived(NotePosition note) {
+  Future<void> _onNoteReceived(NotePosition note) async {
     if (state.connectionStatus != ConnectionStatus.connected) {
       debugPrint('Not connected, then why are we getting notes?');
       return;
@@ -177,8 +177,17 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
 
     debugPrint('Chord matched with $chordMatch');
 
+    // Delay used to display all of the played notes for a while
+    // before piano is cleared
+    // ignore: prefer_function_declarations_over_variables
+    final Future Function() delay =
+        () => Future.delayed(const Duration(milliseconds: 200));
+
     switch (chordMatch) {
       case ChordMatch.matched:
+        state = state.copyWith(playedNotes: playedNotes);
+        await delay();
+
         chord = _chordRepository.random;
         playedNotes.clear();
         gameState = gameState.addSuccess();
@@ -187,6 +196,9 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
         // wait for following notes
         break;
       case ChordMatch.failed:
+        state = state.copyWith(playedNotes: playedNotes);
+        await delay();
+
         playedNotes.clear();
         gameState = gameState.addFailure();
         break;
