@@ -160,13 +160,14 @@ class _DeviceSelectorWidget extends ConsumerWidget {
     final viewModel = ref.watch(chordsTestPageViewModelProvder.notifier);
     final model = ref.watch(chordsTestPageViewModelProvder);
 
+    final devices = model.devices;
     return DropdownButton<MidiDevice?>(
       value: model.selectedDevice,
       isExpanded: true,
-      items: model.devices
+      items: devices
           .map(
             (device) => DropdownMenuItem<MidiDevice?>(
-              value: model.devices.first,
+              value: device,
               child: Text(
                 device.name,
                 overflow: TextOverflow.ellipsis,

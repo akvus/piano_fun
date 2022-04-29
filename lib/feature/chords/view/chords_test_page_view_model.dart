@@ -45,8 +45,6 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
   late final StreamSubscription? _midiDataReceiverSub;
 
   Future<void> onInit() async {
-    await _resetState();
-
     _midiSetupChangeSub =
         _midiRepository.midiSetupChangeStream?.listen((event) {
       if (event == MidiSetUpChangeEvent.deviceFound.name ||
@@ -61,14 +59,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
         debugPrint('Error $e');
       });
 
-    final devices = await _midiRepository.devices;
-
-    state = state.copyWith(
-      devices: devices,
-      status: devices.isNotEmpty
-          ? ConnectionStatus.noDevices
-          : ConnectionStatus.disconnected,
-    );
+    await _initDevices();
   }
 
   @override
@@ -78,7 +69,8 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
     super.dispose();
   }
 
-  Future<void> _resetState() async {
+  Future<void> _initDevices() async {
+    _midiRepository.addVirtualDevice();
     final devices = await _midiRepository.devices;
 
     final status = devices.isEmpty

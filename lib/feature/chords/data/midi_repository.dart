@@ -41,12 +41,11 @@ class MidiRepository {
 
   Stream<String>? get midiSetupChangeStream => _midiCommand.onMidiSetupChanged;
 
-  Future<List<MidiDevice>> get devices async {
-    final devices = await _midiCommand.devices;
-
-    return devices ?? [];
-  }
+  Future<List<MidiDevice>> get devices async =>
+      await _midiCommand.devices ?? [];
 
   Future<void> connect(MidiDevice device) =>
       _midiCommand.connectToDevice(device);
+
+  void addVirtualDevice() => _midiCommand.addVirtualDevice(name: 'Virtual');
 }
