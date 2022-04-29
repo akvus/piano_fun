@@ -2,8 +2,8 @@ import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_midi_command/flutter_midi_command_messages.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano/piano.dart';
-import 'package:piano_chords_test/feature/chords/data/midi_repository.dart';
-import 'package:piano_chords_test/feature/chords/data/note_repository.dart';
+import 'package:fun_with_piano/feature/chords/data/midi_repository.dart';
+import 'package:fun_with_piano/feature/chords/data/note_repository.dart';
 
 final noteMapperProvider = Provider.autoDispose((ref) => NoteMapper(
       ref.read(noteRepositoryProvider),

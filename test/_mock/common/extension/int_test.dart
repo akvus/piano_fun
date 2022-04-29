@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:piano_chords_test/common/extension/int.dart';
+import 'package:fun_with_piano/common/extension/int.dart';
 
 void main() {
   group('IntExtension', () {

@@ -4,8 +4,8 @@ import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:piano/piano.dart';
-import 'package:piano_chords_test/feature/chords/data/note_mapper.dart';
-import 'package:piano_chords_test/feature/chords/data/note_repository.dart';
+import 'package:fun_with_piano/feature/chords/data/note_mapper.dart';
+import 'package:fun_with_piano/feature/chords/data/note_repository.dart';
 
 import '../../../_mock/midi_packet.mock.dart';
 

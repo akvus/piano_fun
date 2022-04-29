@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano/piano.dart';
-import 'package:piano_chords_test/common/extension/int.dart';
-import 'package:piano_chords_test/feature/chords/data/midi_command.dart';
-import 'package:piano_chords_test/feature/chords/data/note_mapper.dart';
+import 'package:fun_with_piano/common/extension/int.dart';
+import 'package:fun_with_piano/feature/chords/data/midi_command.dart';
+import 'package:fun_with_piano/feature/chords/data/note_mapper.dart';
 
 final midiRepositoryProvider = Provider.autoDispose((ref) => MidiRepository(
       ref.read(midiCommandProvider),

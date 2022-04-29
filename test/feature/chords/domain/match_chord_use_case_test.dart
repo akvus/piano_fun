@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:piano/piano.dart';
-import 'package:piano_chords_test/feature/chords/domain/chord.dart';
-import 'package:piano_chords_test/feature/chords/domain/match_chord_use_case.dart';
+import 'package:fun_with_piano/feature/chords/domain/chord.dart';
+import 'package:fun_with_piano/feature/chords/domain/match_chord_use_case.dart';
 
 void main() {
   group('$MatchChordUseCase', () {

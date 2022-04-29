@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:piano_chords_test/feature/chords/view/chords_test_page.dart';
+import 'package:fun_with_piano/feature/chords/view/chords_test_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));

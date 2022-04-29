@@ -4,12 +4,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano/piano.dart';
-import 'package:piano_chords_test/feature/chords/data/chord_repository.dart';
-import 'package:piano_chords_test/feature/chords/data/midi_repository.dart';
-import 'package:piano_chords_test/feature/chords/domain/chord.dart';
-import 'package:piano_chords_test/feature/chords/domain/match_chord_use_case.dart';
-import 'package:piano_chords_test/feature/chords/view/chords_test_page_model.dart';
-import 'package:piano_chords_test/feature/chords/view/game_state.dart';
+import 'package:fun_with_piano/feature/chords/data/chord_repository.dart';
+import 'package:fun_with_piano/feature/chords/data/midi_repository.dart';
+import 'package:fun_with_piano/feature/chords/domain/chord.dart';
+import 'package:fun_with_piano/feature/chords/domain/match_chord_use_case.dart';
+import 'package:fun_with_piano/feature/chords/view/chords_test_page_model.dart';
+import 'package:fun_with_piano/feature/chords/view/game_state.dart';
 
 enum MidiSetUpChangeEvent { deviceFound, deviceLost }
 

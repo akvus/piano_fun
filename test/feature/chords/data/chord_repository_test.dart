@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:piano_chords_test/feature/chords/data/chord_repository.dart';
+import 'package:fun_with_piano/feature/chords/data/chord_repository.dart';
 
 import '../../../_mock/random.mock.dart';
 
