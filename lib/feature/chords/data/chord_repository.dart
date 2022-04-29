@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano/piano.dart';
 import 'package:piano_chords_test/feature/chords/domain/chord.dart';
@@ -29,7 +28,6 @@ class ChordRepository {
 
   List<Chord> get all {
     _cache ??= [
-      // TODO fill in xDD
       Chord(
         name: 'C',
         notes: [
@@ -77,6 +75,55 @@ class ChordRepository {
         ],
       ),
       Chord(
+        name: 'C#/D♭',
+        notes: [
+          NotePosition(
+              note: Note.D, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.F, octave: _baseOctave),
+          NotePosition(
+              note: Note.A, octave: _baseOctave, accidental: Accidental.Flat),
+        ],
+      ),
+      Chord(
+        name: 'C#/D♭m',
+        notes: [
+          NotePosition(
+              note: Note.C, octave: _baseOctave, accidental: Accidental.Sharp),
+          NotePosition(note: Note.E, octave: _baseOctave),
+          NotePosition(
+              note: Note.G, octave: _baseOctave, accidental: Accidental.Sharp),
+        ],
+      ),
+      Chord(
+        name: 'C#/D♭aug',
+        notes: [
+          NotePosition(
+              note: Note.D, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.F, octave: _baseOctave),
+          NotePosition(note: Note.A, octave: _baseOctave),
+        ],
+      ),
+      Chord(
+        name: 'C#/D♭dim',
+        notes: [
+          NotePosition(
+              note: Note.C, octave: _baseOctave, accidental: Accidental.Sharp),
+          NotePosition(note: Note.E, octave: _baseOctave),
+          NotePosition(note: Note.G, octave: _baseOctave),
+        ],
+      ),
+      Chord(
+        name: 'C#/D♭7',
+        notes: [
+          NotePosition(
+              note: Note.D, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.F, octave: _baseOctave),
+          NotePosition(
+              note: Note.A, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.B, octave: _baseOctave),
+        ],
+      ),
+      Chord(
         name: 'D',
         notes: [
           NotePosition(note: Note.D, octave: _baseOctave),
@@ -119,6 +166,58 @@ class ChordRepository {
           NotePosition(note: Note.F, octave: _baseOctave),
           NotePosition(note: Note.A, octave: _baseOctave),
           NotePosition(note: Note.C, octave: _nextOctave),
+        ],
+      ),
+      Chord(
+        name: 'D#/E♭',
+        notes: [
+          NotePosition(
+              note: Note.E, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.G, octave: _baseOctave),
+          NotePosition(
+              note: Note.B, octave: _baseOctave, accidental: Accidental.Flat),
+        ],
+      ),
+      Chord(
+        name: 'D#/E♭m',
+        notes: [
+          NotePosition(
+              note: Note.E, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(
+              note: Note.G, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(
+              note: Note.B, octave: _baseOctave, accidental: Accidental.Flat),
+        ],
+      ),
+      Chord(
+        name: 'D#/E♭aug',
+        notes: [
+          NotePosition(
+              note: Note.E, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.G, octave: _baseOctave),
+          NotePosition(note: Note.B, octave: _baseOctave),
+        ],
+      ),
+      Chord(
+        name: 'D#/E♭dim',
+        notes: [
+          NotePosition(
+              note: Note.E, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(
+              note: Note.G, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.A, octave: _baseOctave) // == B♭♭
+        ],
+      ),
+      Chord(
+        name: 'D#/E♭7',
+        notes: [
+          NotePosition(
+              note: Note.E, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.G, octave: _baseOctave),
+          NotePosition(
+              note: Note.B, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(
+              note: Note.D, octave: _nextOctave, accidental: Accidental.Flat),
         ],
       ),
       Chord(
@@ -214,6 +313,46 @@ class ChordRepository {
         ],
       ),
       Chord(
+        name: 'F#/G♭',
+        notes: [
+          NotePosition(
+              note: Note.F, octave: _baseOctave, accidental: Accidental.Sharp),
+          NotePosition(
+              note: Note.A, octave: _baseOctave, accidental: Accidental.Sharp),
+          NotePosition(
+              note: Note.C, octave: _nextOctave, accidental: Accidental.Sharp),
+        ],
+      ),
+      Chord(
+        name: 'F#/G♭m',
+        notes: [
+          NotePosition(
+              note: Note.F, octave: _baseOctave, accidental: Accidental.Sharp),
+          NotePosition(note: Note.A, octave: _baseOctave),
+          NotePosition(
+              note: Note.C, octave: _nextOctave, accidental: Accidental.Sharp),
+        ],
+      ),
+      Chord(
+        name: 'F#/G♭aug',
+        notes: [
+          NotePosition(
+              note: Note.F, octave: _baseOctave, accidental: Accidental.Sharp),
+          NotePosition(
+              note: Note.A, octave: _baseOctave, accidental: Accidental.Sharp),
+          NotePosition(note: Note.D, octave: _nextOctave), // == C##
+        ],
+      ),
+      Chord(
+        name: 'F#/G♭dim',
+        notes: [
+          NotePosition(
+              note: Note.F, octave: _baseOctave, accidental: Accidental.Sharp),
+          NotePosition(note: Note.A, octave: _baseOctave),
+          NotePosition(note: Note.C, octave: _nextOctave),
+        ],
+      ),
+      Chord(
         name: 'G',
         notes: [
           NotePosition(note: Note.G, octave: _baseOctave),
@@ -256,6 +395,56 @@ class ChordRepository {
           NotePosition(note: Note.B, octave: _baseOctave),
           NotePosition(note: Note.D, octave: _nextOctave),
           NotePosition(note: Note.F, octave: _nextOctave),
+        ],
+      ),
+      Chord(
+        name: 'G#/A♭',
+        notes: [
+          NotePosition(
+              note: Note.A, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.C, octave: _nextOctave),
+          NotePosition(
+              note: Note.E, octave: _nextOctave, accidental: Accidental.Flat),
+        ],
+      ),
+      Chord(
+        name: 'G#/A♭m',
+        notes: [
+          NotePosition(
+              note: Note.G, octave: _baseOctave, accidental: Accidental.Sharp),
+          NotePosition(note: Note.B, octave: _baseOctave),
+          NotePosition(
+              note: Note.D, octave: _nextOctave, accidental: Accidental.Sharp),
+        ],
+      ),
+      Chord(
+        name: 'G#/A♭aug',
+        notes: [
+          NotePosition(
+              note: Note.A, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.C, octave: _nextOctave),
+          NotePosition(note: Note.E, octave: _nextOctave),
+        ],
+      ),
+      Chord(
+        name: 'G#/A♭dim',
+        notes: [
+          NotePosition(
+              note: Note.G, octave: _baseOctave, accidental: Accidental.Sharp),
+          NotePosition(note: Note.B, octave: _baseOctave),
+          NotePosition(note: Note.D, octave: _nextOctave),
+        ],
+      ),
+      Chord(
+        name: 'G#/A♭7',
+        notes: [
+          NotePosition(
+              note: Note.A, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.C, octave: _nextOctave),
+          NotePosition(
+              note: Note.E, octave: _nextOctave, accidental: Accidental.Flat),
+          NotePosition(
+              note: Note.G, octave: _nextOctave, accidental: Accidental.Flat),
         ],
       ),
       Chord(
@@ -305,6 +494,55 @@ class ChordRepository {
         ],
       ),
       Chord(
+        name: 'A#/B♭',
+        notes: [
+          NotePosition(
+              note: Note.B, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.D, octave: _nextOctave),
+          NotePosition(note: Note.F, octave: _nextOctave),
+        ],
+      ),
+      Chord(
+        name: 'A#/B♭m',
+        notes: [
+          NotePosition(
+              note: Note.B, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.D, octave: _nextOctave),
+          NotePosition(note: Note.F, octave: _nextOctave),
+        ],
+      ),
+      Chord(
+        name: 'A#/B♭aug',
+        notes: [
+          NotePosition(
+              note: Note.B, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.D, octave: _nextOctave),
+          NotePosition(
+              note: Note.F, octave: _nextOctave, accidental: Accidental.Sharp),
+        ],
+      ),
+      Chord(
+        name: 'A#/B♭dim',
+        notes: [
+          NotePosition(
+              note: Note.B, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.D, octave: _nextOctave),
+          NotePosition(
+              note: Note.F, octave: _nextOctave, accidental: Accidental.Flat),
+        ],
+      ),
+      Chord(
+        name: 'A#/B♭',
+        notes: [
+          NotePosition(
+              note: Note.B, octave: _baseOctave, accidental: Accidental.Flat),
+          NotePosition(note: Note.D, octave: _nextOctave),
+          NotePosition(note: Note.F, octave: _nextOctave),
+          NotePosition(
+              note: Note.A, octave: _nextOctave, accidental: Accidental.Flat),
+        ],
+      ),
+      Chord(
         name: 'B',
         notes: [
           NotePosition(note: Note.B, octave: _baseOctave),
@@ -349,16 +587,6 @@ class ChordRepository {
           NotePosition(
               note: Note.F, octave: _nextOctave, accidental: Accidental.Sharp),
           NotePosition(note: Note.A, octave: _nextOctave),
-        ],
-      ),
-      Chord(
-        name: 'E♭',
-        notes: [
-          NotePosition(
-              note: Note.E, octave: _baseOctave, accidental: Accidental.Flat),
-          NotePosition(note: Note.G, octave: _baseOctave),
-          NotePosition(
-              note: Note.B, octave: _baseOctave, accidental: Accidental.Flat),
         ],
       ),
     ];
