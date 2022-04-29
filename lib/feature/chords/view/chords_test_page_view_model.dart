@@ -77,7 +77,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
         ? ConnectionStatus.noDevices
         : ConnectionStatus.disconnected;
 
-    state.copyWith(
+    state = state.copyWith(
       devices: devices,
       status: status,
     );
