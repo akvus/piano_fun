@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.piano_chords_test">
+    package="com.waysnpaths.piano_chords_test">
    <application
         android:label="piano_chords_test"
         android:name="${applicationName}"
