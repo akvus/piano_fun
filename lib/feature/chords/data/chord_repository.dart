@@ -257,7 +257,7 @@ class ChordRepository {
         ],
       ),
       Chord(
-        name: 'E',
+        name: 'E7',
         notes: [
           NotePosition(note: Note.E, octave: _baseOctave),
           NotePosition(
