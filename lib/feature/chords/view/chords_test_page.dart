@@ -179,7 +179,9 @@ class _DeviceSelectorWidget extends ConsumerWidget {
             ),
           )
           .toList(),
-      onChanged: (device) => viewModel.onDeviceSelected(device),
+      onChanged: model.connectionStatus != ConnectionStatus.connected
+          ? (device) => viewModel.onDeviceSelected(device)
+          : null,
     );
   }
 }
