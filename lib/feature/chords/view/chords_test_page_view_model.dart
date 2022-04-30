@@ -75,7 +75,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
   @visibleForTesting
   Future<void> onDevicesUpdated() async {
     final devices = await _midiRepository.devices;
-    ConnectionStatus status;
+    ConnectionStatus connectionStatus;
     MidiDevice? selectedDevice;
 
     try {
@@ -87,17 +87,17 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
     }
 
     if (devices.isEmpty) {
-      status = ConnectionStatus.noDevices;
+      connectionStatus = ConnectionStatus.noDevices;
     } else if (selectedDevice != null &&
         state.connectionStatus == ConnectionStatus.connected) {
-      status = ConnectionStatus.connected;
+      connectionStatus = ConnectionStatus.connected;
     } else {
-      status = ConnectionStatus.disconnected;
+      connectionStatus = ConnectionStatus.disconnected;
     }
 
     state = state.copyWith(
       devices: devices,
-      connectionStatus: status,
+      connectionStatus: connectionStatus,
       selectedDevice: selectedDevice,
     );
   }
@@ -173,6 +173,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
   Future<void> onActionButtonPressed() async {
     if (state.selectedDevice != null) {
       switch (state.connectionStatus) {
+        case ConnectionStatus.loading:
         case ConnectionStatus.noDevices:
           break;
         case ConnectionStatus.disconnected:
@@ -186,6 +187,8 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
   }
 
   Future<void> _start() async {
+    state = state.copyWith(connectionStatus: ConnectionStatus.loading);
+
     await _midiRepository.connect(state.selectedDevice!);
 
     state = state.copyWith(

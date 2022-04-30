@@ -108,6 +108,10 @@ class _GameStatusWidget extends ConsumerWidget {
         text = 'Select device and start';
         color = Colors.red;
         break;
+      case ConnectionStatus.loading:
+        text = 'Connecting...';
+        color = Colors.grey;
+        break;
       case ConnectionStatus.noDevices:
         text = 'No devices';
         color = Colors.grey;
@@ -139,6 +143,9 @@ class _TheButtonWidget extends ConsumerWidget {
         break;
       case ConnectionStatus.disconnected:
         text = 'Start';
+        break;
+      case ConnectionStatus.loading:
+        text = '...';
         break;
       case ConnectionStatus.noDevices:
         text = 'Ups';
@@ -174,7 +181,8 @@ class _DeviceSelectorWidget extends ConsumerWidget {
             ),
           )
           .toList(),
-      onChanged: model.connectionStatus != ConnectionStatus.connected
+      onChanged: model.connectionStatus != ConnectionStatus.connected ||
+              model.connectionStatus != ConnectionStatus.loading
           ? (device) => viewModel.onDeviceSelected(device)
           : null,
     );

@@ -18,4 +18,4 @@ class ChordsTestPageModel with _$ChordsTestPageModel {
   }) = _ChordsTestePageModel;
 }
 
-enum ConnectionStatus { noDevices, disconnected, connected }
+enum ConnectionStatus { noDevices, disconnected, connected, loading }
