@@ -522,14 +522,14 @@ class ChordRepository {
         name: 'A#/B♭dim',
         notes: [
           NotePosition(
-              note: Note.B, octave: _baseOctave, accidental: Accidental.Flat),
-          NotePosition(note: Note.D, octave: _nextOctave),
+              note: Note.A, octave: _baseOctave, accidental: Accidental.Sharp),
           NotePosition(
-              note: Note.F, octave: _nextOctave, accidental: Accidental.Flat),
+              note: Note.C, octave: _nextOctave, accidental: Accidental.Sharp),
+          NotePosition(note: Note.E, octave: _nextOctave),
         ],
       ),
       Chord(
-        name: 'A#/B♭',
+        name: 'A#/B♭7',
         notes: [
           NotePosition(
               note: Note.B, octave: _baseOctave, accidental: Accidental.Flat),
