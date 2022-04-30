@@ -63,16 +63,17 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
         _midiRepository.midiSetupChangeStream?.listen((event) {
       if (event == MidiSetUpChangeEvent.deviceFound.name ||
           event == MidiSetUpChangeEvent.deviceLost.name) {
-        _onDevicesUpdated();
+        onDevicesUpdated();
       }
     });
 
     _midiDataReceiverSub = _midiRepository.notesStream?.listen(
-      (note) => _onNoteReceived(note),
+      (note) => onNoteReceived(note),
     )?..onError((e) => debugPrint('Error: $e'));
   }
 
-  Future<void> _onDevicesUpdated() async {
+  @visibleForTesting
+  Future<void> onDevicesUpdated() async {
     final devices = await _midiRepository.devices;
     ConnectionStatus status;
     MidiDevice? selectedDevice;
@@ -101,7 +102,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
     );
   }
 
-  Future<void> _onNoteReceived(NotePosition note) async {
+  Future<void> onNoteReceived(NotePosition note) async {
     if (state.connectionStatus != ConnectionStatus.connected) {
       debugPrint('Not connected, then why are we getting notes?');
       return;
@@ -203,6 +204,4 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
       gameState: null,
     );
   }
-
-  void onPianoKeyTapped(NotePosition position) => _onNoteReceived(position);
 }

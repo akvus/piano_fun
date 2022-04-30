@@ -10,13 +10,11 @@ class ChordsTestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: Consumer(
-          builder: (context, ref, child) => Column(
-            children: const [
-              Expanded(child: _PianoWidget()),
-              _ControlRowWidget(),
-            ],
-          ),
+        body: Column(
+          children: const [
+            Expanded(child: _PianoWidget()),
+            _ControlRowWidget(),
+          ],
         ),
       );
 }
@@ -83,7 +81,7 @@ class _PianoWidget extends ConsumerWidget {
       accidentalColor: Colors.black,
       keyWidth: 50,
       noteRange: NoteRange.forClefs([Clef.Treble]),
-      onNotePositionTapped: (position) => viewModel.onPianoKeyTapped(position),
+      onNotePositionTapped: (position) => viewModel.onNoteReceived(position),
     );
   }
 }
