@@ -241,8 +241,7 @@ class ChordRepository {
           NotePosition(note: Note.E, octave: _baseOctave),
           NotePosition(
               note: Note.G, octave: _baseOctave, accidental: Accidental.Sharp),
-          NotePosition(
-              note: Note.B, octave: _baseOctave, accidental: Accidental.Sharp),
+          NotePosition(note: Note.C, octave: _nextOctave),
         ],
       ),
       Chord(
