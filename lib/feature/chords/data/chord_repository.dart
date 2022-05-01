@@ -385,7 +385,7 @@ class ChordRepository {
         ],
       ),
       Chord(
-        name: 'G',
+        name: 'G7',
         notes: [
           NotePosition(note: Note.G, octave: _baseOctave),
           NotePosition(note: Note.B, octave: _baseOctave),
