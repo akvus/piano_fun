@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano/piano.dart';
 import 'package:fun_with_piano/feature/chords/domain/chord.dart';
@@ -161,7 +162,8 @@ class ChordRepository {
         name: 'D7',
         notes: [
           NotePosition(note: Note.D, octave: _baseOctave),
-          NotePosition(note: Note.F, octave: _baseOctave),
+          NotePosition(
+              note: Note.F, octave: _baseOctave, accidental: Accidental.Sharp),
           NotePosition(note: Note.A, octave: _baseOctave),
           NotePosition(note: Note.C, octave: _nextOctave),
         ],
@@ -466,8 +468,7 @@ class ChordRepository {
           NotePosition(note: Note.A, octave: _baseOctave),
           NotePosition(
               note: Note.C, octave: _nextOctave, accidental: Accidental.Sharp),
-          NotePosition(
-              note: Note.E, octave: _nextOctave, accidental: Accidental.Sharp),
+          NotePosition(note: Note.F),
         ],
       ),
       Chord(
