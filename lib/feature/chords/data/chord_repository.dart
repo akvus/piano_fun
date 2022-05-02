@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:piano/piano.dart';
 import 'package:fun_with_piano/feature/chords/domain/chord.dart';

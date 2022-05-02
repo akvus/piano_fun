@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fun_with_piano/feature/chords/domain/match_chord_use_case.dart';
 import 'package:fun_with_piano/feature/chords/view/chords_test_page_view_model.dart';
 import 'package:piano/piano.dart';
+import 'package:time/time.dart';
 
 import '../../../_mock/chord_repository.mock.dart';
 import '../../../_mock/midi_repository.mock.dart';
@@ -65,11 +66,6 @@ void main() {
 
         controller.add(NotePosition.middleC);
       });
-
-      // TODO yeah, I know there should be no TODOs
-      // and tests written before the actual code :)
-      // TODO should init devices
-      // TODO should init connection state
     });
 
     group('post onInit()', () {
@@ -82,25 +78,13 @@ void main() {
         );
       });
 
-      group('onDevicesUpdated', () {
-        // TODO
-      });
-
-      group('onNoteReceived', () {
-        // TODO
-      });
-
-      group('onActionButtonPressed', () {
-        // TODO
-      });
-
       group('onDeviceSelected', () {
         test('should set selectedDevice on state', () async {
           final device = MidiDevice('id', 'name', 'type', false);
 
           viewModel.onDeviceSelected(device);
 
-          await Future.delayed(const Duration(milliseconds: 200), () {});
+          await Future.delayed(200.milliseconds, () {});
 
           expect(viewModel.state.selectedDevice, device);
         });
