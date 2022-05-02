@@ -170,17 +170,23 @@ class _DeviceSelectorWidget extends ConsumerWidget {
     return DropdownButton<MidiDevice?>(
       value: model.selectedDevice,
       isExpanded: true,
-      items: model.devices
-          .map(
-            (device) => DropdownMenuItem<MidiDevice?>(
-              value: device,
-              child: Text(
-                device.name,
-                overflow: TextOverflow.ellipsis,
-              ),
+      items: model.devices.map(
+        (device) {
+          // The MidiConmmand library does not return the named assigned to
+          // a virtual device. Ideally fix it by forking the lib later than here.
+          final name = device.name == 'FlutterMidiCommand'
+              ? 'Virtual piano'
+              : device.name;
+
+          return DropdownMenuItem<MidiDevice?>(
+            value: device,
+            child: Text(
+              name,
+              overflow: TextOverflow.ellipsis,
             ),
-          )
-          .toList(),
+          );
+        },
+      ).toList(),
       onChanged: model.connectionStatus != ConnectionStatus.connected ||
               model.connectionStatus != ConnectionStatus.loading
           ? (device) => viewModel.onDeviceSelected(device)
