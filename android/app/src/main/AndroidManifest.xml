@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.waysnpaths.piano_chords_test">
    <application
-        android:label="piano_chords_test"
+        android:label="Piano Chords - Test"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/icon">
         <activity
             android:name=".MainActivity"
             android:screenOrientation="landscape"
