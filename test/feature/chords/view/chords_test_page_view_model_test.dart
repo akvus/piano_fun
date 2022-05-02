@@ -13,9 +13,9 @@ import 'package:mocktail/mocktail.dart';
 import 'package:piano/piano.dart';
 import 'package:time/time.dart';
 
-import '../../../_mock/chord_repository.mock.dart';
 import '../../../_mock/fakes_setup.dart';
-import '../../../_mock/midi_repository.mock.dart';
+import '../../../_mock/mocked_chord_repository.dart';
+import '../../../_mock/mocked_midi_repository.dart';
 
 void main() {
   group('$ChordsTestPageViewModel', () {

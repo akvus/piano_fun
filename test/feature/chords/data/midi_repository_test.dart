@@ -8,8 +8,8 @@ import 'package:fun_with_piano/feature/chords/data/midi_repository.dart';
 import 'package:fun_with_piano/feature/chords/data/note_mapper.dart';
 import 'package:fun_with_piano/feature/chords/data/note_repository.dart';
 
-import '../../../_mock/midi_command.mock.dart';
-import '../../../_mock/midi_packet.mock.dart';
+import '../../../_mock/mocked_midi_command.dart';
+import '../../../_mock/mocked_midi_packet.dart';
 
 void main() {
   group('$MidiRepository', () {
@@ -28,22 +28,26 @@ void main() {
     });
 
     group('notesStream', () {
-      test('should return a note mapped from a $MidiPacket', () {
+      const noteOnCode = 128;
+      const noteOffCode = 144;
+      const middleCCode = 60;
+
+      test('should emit a note mapped from a $MidiPacket', () {
         final mockedMidiPacket = MockedMidiPacket()
-          ..mockData(Uint8List.fromList([128, 48, 2]));
+          ..mockData(Uint8List.fromList([noteOnCode, middleCCode, 2]));
 
         final stream = Stream.value(mockedMidiPacket);
         mockedMidiCommand.mockOnMidiDataReceived(stream);
 
         expectLater(
           repository.notesStream,
-          emits(NotePosition(note: Note.C, octave: 3)),
+          emits(NotePosition.middleC),
         );
       });
 
       test('should throw when $MidiPacket does not match any note', () {
         final mockedMidiPacket = MockedMidiPacket()
-          ..mockData(Uint8List.fromList([128, 1148, 2]));
+          ..mockData(Uint8List.fromList([noteOnCode, 1148, 2]));
 
         final stream = Stream.value(mockedMidiPacket);
         mockedMidiCommand.mockOnMidiDataReceived(stream);
@@ -51,6 +55,19 @@ void main() {
         expectLater(
           repository.notesStream,
           emitsError(isA<StateError>()),
+        );
+      });
+
+      test('should not emit when $MidiPacket is a note off event', () {
+        final mockedMidiPacket = MockedMidiPacket()
+          ..mockData(Uint8List.fromList([noteOffCode, middleCCode, 2]));
+
+        final stream = Stream.value(mockedMidiPacket);
+        mockedMidiCommand.mockOnMidiDataReceived(stream);
+
+        expectLater(
+          repository.notesStream,
+          neverEmits(NotePosition.middleC),
         );
       });
     });

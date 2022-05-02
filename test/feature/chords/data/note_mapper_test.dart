@@ -7,7 +7,7 @@ import 'package:piano/piano.dart';
 import 'package:fun_with_piano/feature/chords/data/note_mapper.dart';
 import 'package:fun_with_piano/feature/chords/data/note_repository.dart';
 
-import '../../../_mock/midi_packet.mock.dart';
+import '../../../_mock/mocked_midi_packet.dart';
 
 void main() {
   group('$NoteMapper', () {
