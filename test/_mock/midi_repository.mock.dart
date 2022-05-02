@@ -15,4 +15,8 @@ class MockedMidiRepository extends Mock implements MidiRepository {
   void mockedMidiDevices(List<MidiDevice> expected) {
     when(() => devices).thenAnswer((invocation) => Future.value(expected));
   }
+
+  void mockConnect() {
+    when(() => connect(any())).thenAnswer((invocation) => Future.value());
+  }
 }
