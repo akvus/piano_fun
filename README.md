@@ -12,3 +12,8 @@ You can build on top of this. If you're planning a release an app with this base
 
 Caveat: This is a minimal set up with no abstractions etc., yet proper-ish architecture. Using Riverpod for DI and StateNotifier for state management.
 
+Made with: 
+* https://pub.dev/packages/piano
+* https://pub.dev/packages/flutter_midi_command
+* https://pub.dev/packages/riverpod
+* and others
