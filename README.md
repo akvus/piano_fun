@@ -1,4 +1,4 @@
-# Fun with piano
+# Piano Chords Test - Flutter app
 
 Test how good do you know chords with a digital piano or virtual keyboard.
 
