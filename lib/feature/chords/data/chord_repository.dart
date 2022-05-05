@@ -503,7 +503,8 @@ class ChordRepository {
         notes: [
           NotePosition(
               note: Note.B, octave: _baseOctave, accidental: Accidental.Flat),
-          NotePosition(note: Note.D, octave: _nextOctave),
+          NotePosition(
+              note: Note.D, octave: _nextOctave, accidental: Accidental.Flat),
           NotePosition(note: Note.F, octave: _nextOctave),
         ],
       ),
@@ -521,9 +522,9 @@ class ChordRepository {
         name: 'A#/B♭dim',
         notes: [
           NotePosition(
-              note: Note.A, octave: _baseOctave, accidental: Accidental.Sharp),
+              note: Note.B, octave: _baseOctave, accidental: Accidental.Flat),
           NotePosition(
-              note: Note.C, octave: _nextOctave, accidental: Accidental.Sharp),
+              note: Note.D, octave: _nextOctave, accidental: Accidental.Flat),
           NotePosition(note: Note.E, octave: _nextOctave),
         ],
       ),
