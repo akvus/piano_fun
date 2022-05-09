@@ -6,10 +6,12 @@ import 'package:fun_with_piano/common/extension/int.dart';
 import 'package:fun_with_piano/feature/chords/data/midi_command.dart';
 import 'package:fun_with_piano/feature/chords/data/note_mapper.dart';
 
-final midiRepositoryProvider = Provider.autoDispose((ref) => MidiRepository(
-      ref.read(midiCommandProvider),
-      ref.read(noteMapperProvider),
-    ));
+final midiRepositoryProvider = Provider.autoDispose(
+  (ref) => MidiRepository(
+    ref.read(midiCommandProvider),
+    ref.read(noteMapperProvider),
+  ),
+);
 
 const midiPacketStatusIndex = 0;
 const midiPacketNoteIndex = 1;

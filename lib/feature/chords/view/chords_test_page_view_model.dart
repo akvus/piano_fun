@@ -28,14 +28,16 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
     this._midiRepository,
     this._chordRepository,
     this._matchChordUseCase,
-  ) : super(const ChordsTestPageModel(
-          devices: [],
-          connectionStatus: ConnectionStatus.noDevices,
-          selectedDevice: null,
-          expectedChord: null,
-          playedNotes: [],
-          gameState: null,
-        )) {
+  ) : super(
+          const ChordsTestPageModel(
+            devices: [],
+            connectionStatus: ConnectionStatus.noDevices,
+            selectedDevice: null,
+            expectedChord: null,
+            playedNotes: [],
+            gameState: null,
+          ),
+        ) {
     onInit();
   }
 

@@ -4,9 +4,11 @@ import 'package:piano/piano.dart';
 import 'package:fun_with_piano/feature/chords/data/midi_repository.dart';
 import 'package:fun_with_piano/feature/chords/data/note_repository.dart';
 
-final noteMapperProvider = Provider.autoDispose((ref) => NoteMapper(
-      ref.read(noteRepositoryProvider),
-    ));
+final noteMapperProvider = Provider.autoDispose(
+  (ref) => NoteMapper(
+    ref.read(noteRepositoryProvider),
+  ),
+);
 
 class NoteMapper {
   const NoteMapper(this._noteRepository);
