@@ -250,7 +250,7 @@ packages:
       name: flutter_midi_command
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.5"
+    version: "0.4.7"
   flutter_midi_command_linux:
     dependency: transitive
     description:
