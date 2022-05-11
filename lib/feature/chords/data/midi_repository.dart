@@ -28,20 +28,18 @@ class MidiRepository {
   Stream<NotePosition>? get notesStream =>
       // Note: There are two MIDI events for each key pressed: on, off.
       // Currently we need not to know this, so we can skip the off events
-      _midiCommand.onMidiDataReceived?.where((event) {
-        return isNoteOnEvent(event.data[midiPacketStatusIndex]);
-      }).map(
-        (event) {
-          return _noteMapper.map(event);
-        },
-      );
+      _midiCommand.onMidiDataReceived
+          ?.where((event) => isNoteOnEvent(event.data[midiPacketStatusIndex]))
+          .map(
+            (event) => _noteMapper.map(event),
+          );
 
   @visibleForTesting
   bool isNoteOnEvent(int data) =>
       data.isBitSet(7) &&
       !data.isBitSet(6) &&
       !data.isBitSet(5) &&
-      !data.isBitSet(4);
+      data.isBitSet(4);
 
   Stream<String>? get midiSetupChangeStream => _midiCommand.onMidiSetupChanged;
 

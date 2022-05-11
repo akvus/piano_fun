@@ -28,8 +28,8 @@ void main() {
     });
 
     group('notesStream', () {
-      const noteOnCode = 128;
-      const noteOffCode = 144;
+      const noteOnCode = 144;
+      const noteOffCode = 128;
       const middleCCode = 60;
 
       test('should emit a note mapped from a $MidiPacket', () {
@@ -75,13 +75,14 @@ void main() {
     group('isNoteOnEvent', () {
       test('should return true when bits are 1000xyzw', () async {
         // 10000000
-        expect(repository.isNoteOnEvent(128), true);
+        expect(repository.isNoteOnEvent(144), true);
         // 10001111
-        expect(repository.isNoteOnEvent(143), true);
+        expect(repository.isNoteOnEvent(159), true);
       });
+
       test('should return false when bits are other than 1000xyzw', () async {
         // 11001111
-        expect(repository.isNoteOnEvent(207), false);
+        expect(repository.isNoteOnEvent(128), false);
         // 00000001
         expect(repository.isNoteOnEvent(1), false);
       });
