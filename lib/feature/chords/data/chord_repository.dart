@@ -647,7 +647,7 @@ class ChordRepository {
             octave: _nextOctave,
             accidental: Accidental.Sharp,
           ),
-          NotePosition(note: Note.F),
+          NotePosition(note: Note.F, octave: _nextOctave),
         ],
       ),
       Chord(
