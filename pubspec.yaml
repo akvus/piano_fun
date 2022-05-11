@@ -12,7 +12,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  flutter_midi_command: 0.4.5
+  flutter_midi_command: 0.4.7
   flutter_riverpod: 1.0.3
   freezed_annotation: 2.0.1
   piano: 
