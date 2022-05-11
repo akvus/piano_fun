@@ -25,8 +25,7 @@ class _ControlRowWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double horizontalPadding = 16;
-    // an ambiguous number,
-    // could be improved to scale on smaller devices
+    // An ambiguous number, will cause problems on small devices
     const double sidePanelWidth = 250;
 
     return Row(
@@ -173,7 +172,7 @@ class _DeviceSelectorWidget extends ConsumerWidget {
       items: model.devices.map(
         (device) {
           // The MidiConmmand library does not return the named assigned to
-          // a virtual device. Ideally fix it by forking the lib later than here.
+          // a virtual device. Ideally fix the package instead.
           final name = device.name == 'FlutterMidiCommand'
               ? 'Virtual piano'
               : device.name;
