@@ -13,24 +13,21 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_midi_command: 0.4.7
-  flutter_riverpod: 1.0.3
-  freezed_annotation: 2.0.1
+  flutter_riverpod: 1.0.4
+  freezed_annotation: 2.0.3
   piano: 
     git:
       url: https://github.com/akvus/flutter_piano_widget.git
-      ref: 5439c421590912f149283068d0429bd7813f8850
+      ref: 62b26e21ef00f900f80e007e7ce3c424737e0c2f
   time: 2.1.0
 
-dependency_overrides:
-  test_api: 0.4.9
-
 dev_dependencies:
-  build_runner: 2.1.7
-  dart_code_metrics:  4.15.0
-  flutter_lints:  1.0.4
+  build_runner: 2.1.10
+  dart_code_metrics:  4.15.1
+  flutter_lints:  2.0.1
   flutter_test:
     sdk: flutter
-  freezed: 2.0.2
+  freezed: 2.0.3+1
   mocktail: 0.3.0
   test: 1.21.1
 
