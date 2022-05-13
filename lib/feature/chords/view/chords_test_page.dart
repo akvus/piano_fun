@@ -20,7 +20,7 @@ class ChordsTestPage extends StatelessWidget {
 }
 
 class _ControlRowWidget extends StatelessWidget {
-  const _ControlRowWidget({super.key});
+  const _ControlRowWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class _ControlRowWidget extends StatelessWidget {
 }
 
 class _RequestedChordWidget extends ConsumerWidget {
-  const _RequestedChordWidget({super.key});
+  const _RequestedChordWidget();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -67,7 +67,7 @@ class _RequestedChordWidget extends ConsumerWidget {
 }
 
 class _PianoWidget extends ConsumerWidget {
-  const _PianoWidget({super.key});
+  const _PianoWidget();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -86,7 +86,7 @@ class _PianoWidget extends ConsumerWidget {
 }
 
 class _GameStatusWidget extends ConsumerWidget {
-  const _GameStatusWidget({super.key});
+  const _GameStatusWidget();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -128,7 +128,7 @@ class _GameStatusWidget extends ConsumerWidget {
 }
 
 class _TheButtonWidget extends ConsumerWidget {
-  const _TheButtonWidget({super.key});
+  const _TheButtonWidget();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -159,7 +159,7 @@ class _TheButtonWidget extends ConsumerWidget {
 }
 
 class _DeviceSelectorWidget extends ConsumerWidget {
-  const _DeviceSelectorWidget({super.key});
+  const _DeviceSelectorWidget();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
