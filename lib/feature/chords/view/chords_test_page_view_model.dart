@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_midi/flutter_midi.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fun_with_piano/feature/chords/data/flutter_midi.dart';
 import 'package:piano/piano.dart';
 import 'package:fun_with_piano/feature/chords/data/chord_repository.dart';
 import 'package:fun_with_piano/feature/chords/data/midi_repository.dart';
@@ -14,12 +17,15 @@ import 'package:time/time.dart';
 
 enum MidiSetUpChangeEvent { deviceFound, deviceLost }
 
+const _midiFontAssetPath = 'assets/piano_font.sf2';
+
 final chordsTestPageViewModelProvder =
     StateNotifierProvider<ChordsTestPageViewModel, ChordsTestPageModel>(
   (ref) => ChordsTestPageViewModel(
     ref.read(midiRepositoryProvider),
     ref.read(chordRepositoryProvider),
     ref.read(matchChordUseCaseProvider),
+    ref.read(flutterMidiProvider),
   ),
 );
 
@@ -28,6 +34,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
     this._midiRepository,
     this._chordRepository,
     this._matchChordUseCase,
+    this._flutterMidi,
   ) : super(
           const ChordsTestPageModel(
             devices: [],
@@ -44,6 +51,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
   final MidiRepository _midiRepository;
   final ChordRepository _chordRepository;
   final MatchChordUseCase _matchChordUseCase;
+  final FlutterMidi _flutterMidi;
 
   late final StreamSubscription? _midiSetupChangeSub;
   late final StreamSubscription? _midiDataReceiverSub;
@@ -51,6 +59,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
   Future<void> onInit() async {
     _listenToMidiCommands();
     await _initDevices();
+    await _loadFlutterMidi();
   }
 
   @override
@@ -70,8 +79,17 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
     });
 
     _midiDataReceiverSub = _midiRepository.notesStream?.listen(
-      (note) => onNoteReceived(note),
+      (note) => _onNoteReceived(note),
     )?..onError((e) => debugPrint('Error: $e'));
+  }
+
+  Future<void> _loadFlutterMidi() async {
+    ByteData byte = await rootBundle.load(_midiFontAssetPath);
+    // not awaited since awaits forever due to poorly done plugin
+    _flutterMidi.prepare(
+      sf2: byte,
+      name: 'UprightPianoKW-small-20190703.sf2',
+    );
   }
 
   @visibleForTesting
@@ -104,7 +122,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
     );
   }
 
-  Future<void> onNoteReceived(NotePosition note) async {
+  Future<void> _onNoteReceived(NotePosition note) async {
     if (state.connectionStatus != ConnectionStatus.connected) {
       debugPrint('Not connected, then why are we getting notes?');
       return;
@@ -208,5 +226,17 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
       playedNotes: [],
       gameState: null,
     );
+  }
+
+  Future<void> onNotePositionTapped(NotePosition note) async {
+    await _onNoteReceived(note);
+
+    // awaiting causes the note to be played since Android channel returns no result
+    _flutterMidi.playMidiNote(midi: note.pitch);
+
+    // The piano package provides no callback onNotePositionReleased etc.
+    // also if not stopped then keeps playing a note forever
+    await Future.delayed(10.milliseconds);
+    _flutterMidi.stopMidiNote(midi: note.pitch);
   }
 }

@@ -80,7 +80,8 @@ class _PianoWidget extends ConsumerWidget {
       accidentalColor: Colors.black,
       keyWidth: 50,
       noteRange: NoteRange.forClefs([Clef.Treble]),
-      onNotePositionTapped: (position) => viewModel.onNoteReceived(position),
+      onNotePositionTapped: (position) =>
+          viewModel.onNotePositionTapped(position),
     );
   }
 }
