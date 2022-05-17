@@ -15,23 +15,28 @@ import 'package:time/time.dart';
 
 import '../../../_mock/fakes_setup.dart';
 import '../../../_mock/mocked_chord_repository.dart';
+import '../../../_mock/mocked_flutter_midi.dart';
 import '../../../_mock/mocked_midi_repository.dart';
 
 void main() {
   group('$ChordsTestPageViewModel', () {
     late MockedMidiRepository mockedMidiRepository;
     late MockedChordRepository mockedChordRepository;
+    late MockedFlutterMidi mockedFlutterMidi;
     late MatchChordUseCase matchChordUseCase;
 
     late ChordsTestPageViewModel viewModel;
 
     setUpAll(() {
+      TestWidgetsFlutterBinding.ensureInitialized();
       registerAllCallbacks();
     });
 
     setUp(() {
       mockedMidiRepository = MockedMidiRepository();
       mockedChordRepository = MockedChordRepository();
+      mockedFlutterMidi = MockedFlutterMidi();
+      mockedFlutterMidi.mockPrepare();
 
       matchChordUseCase = MatchChordUseCase();
     });
@@ -50,6 +55,7 @@ void main() {
           mockedMidiRepository,
           mockedChordRepository,
           matchChordUseCase,
+          mockedFlutterMidi,
         );
 
         expectLater(stream, emits(MidiSetUpChangeEvent.deviceFound.name));
@@ -69,6 +75,7 @@ void main() {
           mockedMidiRepository,
           mockedChordRepository,
           matchChordUseCase,
+          mockedFlutterMidi,
         );
 
         expectLater(stream, emits(NotePosition.middleC));
@@ -84,6 +91,7 @@ void main() {
           mockedMidiRepository,
           mockedChordRepository,
           matchChordUseCase,
+          mockedFlutterMidi,
         );
       });
 
