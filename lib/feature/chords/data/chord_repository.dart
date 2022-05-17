@@ -282,7 +282,7 @@ class ChordRepository {
             octave: _baseOctave,
             accidental: Accidental.Flat,
           ),
-          NotePosition(note: Note.A, octave: _baseOctave) // == B♭♭
+          NotePosition(note: Note.A, octave: _baseOctave), // == B♭♭
         ],
       ),
       Chord(

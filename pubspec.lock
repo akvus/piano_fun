@@ -184,12 +184,12 @@ packages:
     source: hosted
     version: "1.0.4"
   dart_code_metrics:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: dart_code_metrics
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.15.1"
+    version: "4.15.2"
   dart_style:
     dependency: transitive
     description:

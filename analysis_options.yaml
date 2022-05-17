@@ -9,7 +9,10 @@ linter:
     prefer_single_quotes: true
     require_trailing_commas: true
 
-dartcode_metrics:
+dart_code_metrics:
+  anti-patterns:
+    - long-method
+    - long-parameter-list
   metrics:
     cyclomatic-complexity: 20
     number-of-parameters: 4
@@ -23,6 +26,7 @@ dartcode_metrics:
     - prefer-trailing-comma
     - prefer-conditional-expressions
     - no-equal-then-else
-  anti-patterns:
-    - long-method
-    - long-parameter-list
+    - prefer-first
+    - prefer-last
+    - always-remove-listener
+    - avoid-returning-widgets

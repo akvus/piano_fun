@@ -125,6 +125,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
   Future<void> _onNoteReceived(NotePosition note) async {
     if (state.connectionStatus != ConnectionStatus.connected) {
       debugPrint('Not connected, then why are we getting notes?');
+
       return;
     }
 
