@@ -20,14 +20,14 @@ class MatchChordUseCase {
       }
     }
 
-    int chordMatches = 0;
+    int noteMatchCount = 0;
     for (final note in chord.notes) {
       if (notes.contains(note) || notes.contains(note.alternativeAccidental)) {
-        chordMatches++;
+        noteMatchCount++;
       }
     }
 
-    return chordMatches == chord.notes.length
+    return noteMatchCount == chord.notes.length
         ? ChordMatch.matched
         : ChordMatch.partial;
   }
