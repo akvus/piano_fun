@@ -19,9 +19,9 @@ enum MidiSetUpChangeEvent { deviceFound, deviceLost }
 
 const _midiFontAssetPath = 'assets/piano_font.sf2';
 
-final chordsTestPageViewModelProvder =
-    StateNotifierProvider<ChordsTestPageViewModel, ChordsTestPageModel>(
-  (ref) => ChordsTestPageViewModel(
+final chordsTestPageNotifierProvder =
+    StateNotifierProvider<ChordsTestPageNotifier, ChordsTestPageModel>(
+  (ref) => ChordsTestPageNotifier(
     ref.read(midiRepositoryProvider),
     ref.read(chordRepositoryProvider),
     ref.read(matchChordUseCaseProvider),
@@ -29,8 +29,8 @@ final chordsTestPageViewModelProvder =
   ),
 );
 
-class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
-  ChordsTestPageViewModel(
+class ChordsTestPageNotifier extends StateNotifier<ChordsTestPageModel> {
+  ChordsTestPageNotifier(
     this._midiRepository,
     this._chordRepository,
     this._matchChordUseCase,
