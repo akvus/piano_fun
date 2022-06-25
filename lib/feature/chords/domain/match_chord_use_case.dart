@@ -13,18 +13,15 @@ class MatchChordUseCase {
     required Chord chord,
     required List<NotePosition> notes,
   }) {
-    // TODO remove duplicates at the notes list
-    for (final note in notes) {
-      if (!chord.notes.contains(note) &&
-          !chord.notes.contains(note.alternativeAccidental)) {
-        return ChordMatch.failed;
-      }
-    }
-
     int noteMatchCount = 0;
-    for (final note in chord.notes) {
-      if (notes.contains(note) || notes.contains(note.alternativeAccidental)) {
+
+    // .toSet deals with duplicates
+    for (final note in notes.toSet()) {
+      if (chord.notes.contains(note) ||
+          chord.notes.contains(note.alternativeAccidental)) {
         noteMatchCount++;
+      } else {
+        return ChordMatch.failed;
       }
     }
 
