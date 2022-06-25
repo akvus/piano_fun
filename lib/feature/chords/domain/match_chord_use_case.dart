@@ -13,6 +13,7 @@ class MatchChordUseCase {
     required Chord chord,
     required List<NotePosition> notes,
   }) {
+    // TODO remove duplicates at the notes list
     for (final note in notes) {
       if (!chord.notes.contains(note) &&
           !chord.notes.contains(note.alternativeAccidental)) {
