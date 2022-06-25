@@ -144,12 +144,12 @@ class ChordsTestPageNotifier extends StateNotifier<ChordsTestPageModel> {
 
     // Delay used to display all of the played notes for a while
     // before piano is cleared
-    Future delay() => Future.delayed(200.milliseconds);
+    Future delay200() => Future.delayed(200.milliseconds);
 
     switch (chordMatch) {
       case ChordMatch.matched:
         state = state.copyWith(playedNotes: playedNotes);
-        await delay();
+        await delay200();
 
         chord = _chordRepository.random;
         playedNotes.clear();
@@ -159,7 +159,7 @@ class ChordsTestPageNotifier extends StateNotifier<ChordsTestPageModel> {
         break;
       case ChordMatch.failed:
         state = state.copyWith(playedNotes: playedNotes);
-        await delay();
+        await delay200();
 
         playedNotes.clear();
         gameState = gameState.addFailure();
