@@ -16,8 +16,11 @@ class NoteRepository {
       const octaveCount = 7;
       const c1Code = 24;
 
-      // Note: this skips A0, A0#, B0 and C8 - which could be a problem
-      // if other features are added to the app
+      map[21] = NotePosition(note: Note.A, octave: 0);
+      map[22] =
+          NotePosition(note: Note.A, octave: 0, accidental: Accidental.Sharp);
+      map[23] = NotePosition(note: Note.B, octave: 0);
+
       for (int i = 0; i < octaveCount; i++) {
         final octave = startWithOctave + i;
         int noteCode = c1Code + i * notesInOctave;
@@ -55,6 +58,8 @@ class NoteRepository {
         );
         map[noteCode++] = NotePosition(note: Note.B, octave: octave);
       }
+
+      map[108] = NotePosition(note: Note.C, octave: 8);
 
       _cache = map;
     }
