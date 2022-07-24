@@ -13,21 +13,19 @@ class MatchChordUseCase {
     required Chord chord,
     required List<NotePosition> notes,
   }) {
-    for (final note in notes) {
-      if (!chord.notes.contains(note) &&
-          !chord.notes.contains(note.alternativeAccidental)) {
+    int noteMatchCount = 0;
+
+    // .toSet deals with duplicates
+    for (final note in notes.toSet()) {
+      if (chord.notes.contains(note) ||
+          chord.notes.contains(note.alternativeAccidental)) {
+        noteMatchCount++;
+      } else {
         return ChordMatch.failed;
       }
     }
 
-    int chordMatches = 0;
-    for (final note in chord.notes) {
-      if (notes.contains(note) || notes.contains(note.alternativeAccidental)) {
-        chordMatches++;
-      }
-    }
-
-    return chordMatches == chord.notes.length
+    return noteMatchCount == chord.notes.length
         ? ChordMatch.matched
         : ChordMatch.partial;
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fun_with_piano/feature/chords/view/chords_test_page_notifier.dart';
 import 'package:piano/piano.dart';
 import 'package:fun_with_piano/feature/chords/view/chords_test_page_model.dart';
-import 'package:fun_with_piano/feature/chords/view/chords_test_page_view_model.dart';
 
 class ChordsTestPage extends StatelessWidget {
   const ChordsTestPage({super.key});
@@ -57,7 +57,7 @@ class _RequestedChordWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(chordsTestPageViewModelProvder);
+    final model = ref.watch(chordsTestPageNotifierProvder);
 
     return Text(
       model.expectedChord?.name ?? 'Ready?',
@@ -71,8 +71,8 @@ class _PianoWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(chordsTestPageViewModelProvder);
-    final viewModel = ref.watch(chordsTestPageViewModelProvder.notifier);
+    final model = ref.watch(chordsTestPageNotifierProvder);
+    final notifier = ref.watch(chordsTestPageNotifierProvder.notifier);
 
     return InteractivePiano(
       highlightedNotes: model.playedNotes,
@@ -81,7 +81,7 @@ class _PianoWidget extends ConsumerWidget {
       keyWidth: 50,
       noteRange: NoteRange.forClefs([Clef.Treble]),
       onNotePositionTapped: (position) =>
-          viewModel.onNotePositionTapped(position),
+          notifier.onNotePositionTapped(position),
     );
   }
 }
@@ -91,7 +91,7 @@ class _GameStatusWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(chordsTestPageViewModelProvder);
+    final model = ref.watch(chordsTestPageNotifierProvder);
 
     String text;
     Color color;
@@ -133,8 +133,8 @@ class _TheButtonWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(chordsTestPageViewModelProvder.notifier);
-    final model = ref.watch(chordsTestPageViewModelProvder);
+    final notifier = ref.watch(chordsTestPageNotifierProvder.notifier);
+    final model = ref.watch(chordsTestPageNotifierProvder);
 
     String text;
     switch (model.connectionStatus) {
@@ -154,7 +154,7 @@ class _TheButtonWidget extends ConsumerWidget {
 
     return ElevatedButton(
       child: Text(text),
-      onPressed: () => viewModel.onActionButtonPressed(),
+      onPressed: () => notifier.onActionButtonPressed(),
     );
   }
 }
@@ -164,8 +164,8 @@ class _DeviceSelectorWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(chordsTestPageViewModelProvder.notifier);
-    final model = ref.watch(chordsTestPageViewModelProvder);
+    final notifier = ref.watch(chordsTestPageNotifierProvder.notifier);
+    final model = ref.watch(chordsTestPageNotifierProvder);
 
     return DropdownButton<MidiDevice?>(
       value: model.selectedDevice,
@@ -189,7 +189,7 @@ class _DeviceSelectorWidget extends ConsumerWidget {
       ).toList(),
       onChanged: model.connectionStatus != ConnectionStatus.connected ||
               model.connectionStatus != ConnectionStatus.loading
-          ? (device) => viewModel.onDeviceSelected(device)
+          ? (device) => notifier.onDeviceSelected(device)
           : null,
     );
   }

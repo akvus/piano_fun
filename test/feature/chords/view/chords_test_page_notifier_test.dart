@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fun_with_piano/feature/chords/domain/chord.dart';
 import 'package:fun_with_piano/feature/chords/domain/match_chord_use_case.dart';
 import 'package:fun_with_piano/feature/chords/view/chords_test_page_model.dart';
-import 'package:fun_with_piano/feature/chords/view/chords_test_page_view_model.dart';
+import 'package:fun_with_piano/feature/chords/view/chords_test_page_notifier.dart';
 import 'package:fun_with_piano/feature/chords/view/game_state.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:piano/piano.dart';
@@ -19,13 +19,13 @@ import '../../../_mock/mocked_flutter_midi.dart';
 import '../../../_mock/mocked_midi_repository.dart';
 
 void main() {
-  group('$ChordsTestPageViewModel', () {
+  group('$ChordsTestPageNotifier', () {
     late MockedMidiRepository mockedMidiRepository;
     late MockedChordRepository mockedChordRepository;
     late MockedFlutterMidi mockedFlutterMidi;
     late MatchChordUseCase matchChordUseCase;
 
-    late ChordsTestPageViewModel viewModel;
+    late ChordsTestPageNotifier notifier;
 
     setUpAll(() {
       TestWidgetsFlutterBinding.ensureInitialized();
@@ -51,7 +51,7 @@ void main() {
         mockedMidiRepository.mockMidiSetupChangeStream(stream);
 
         // Note: calls onInit()
-        viewModel = ChordsTestPageViewModel(
+        notifier = ChordsTestPageNotifier(
           mockedMidiRepository,
           mockedChordRepository,
           matchChordUseCase,
@@ -71,7 +71,7 @@ void main() {
         mockedMidiRepository.mockNotesStream(stream);
 
         // Note: calls onInit()
-        viewModel = ChordsTestPageViewModel(
+        notifier = ChordsTestPageNotifier(
           mockedMidiRepository,
           mockedChordRepository,
           matchChordUseCase,
@@ -87,7 +87,7 @@ void main() {
     group('post onInit()', () {
       setUp(() async {
         mockedMidiRepository.mockedMidiDevices([]);
-        viewModel = ChordsTestPageViewModel(
+        notifier = ChordsTestPageNotifier(
           mockedMidiRepository,
           mockedChordRepository,
           matchChordUseCase,
@@ -99,55 +99,61 @@ void main() {
         test('should set selectedDevice on state', () async {
           final device = MidiDevice('id', 'name', 'type', false);
 
-          viewModel.onDeviceSelected(device);
+          notifier.onDeviceSelected(device);
 
           await Future.delayed(200.milliseconds, () {});
 
-          expect(viewModel.state.selectedDevice, device);
+          expect(notifier.state.selectedDevice, device);
         });
       });
 
       group('OnActionButtonPressed', () {
         test(
-            'should connect a device when not connected and a device is selected',
-            () async {
-          final midiDevice = MidiDevice('id', 'name', 'type', false);
-          const expectedChord = Chord(name: 'name', notes: []);
+          'should connect a device when not connected and a device is selected',
+          () async {
+            final midiDevice = MidiDevice(
+              'id',
+              'name',
+              'type',
+              false,
+            );
+            const expectedChord = Chord(name: 'name', notes: []);
 
-          viewModel.state = viewModel.state.copyWith(
-            devices: [midiDevice],
-            selectedDevice: midiDevice,
-            connectionStatus: ConnectionStatus.disconnected,
-          );
-
-          mockedMidiRepository.mockConnect();
-          mockedChordRepository.mockRnadom(expectedChord);
-
-          await viewModel.onActionButtonPressed();
-
-          verify(() => mockedMidiRepository.connect(midiDevice)).called(1);
-
-          expect(
-            viewModel.state,
-            ChordsTestPageModel(
+            notifier.state = notifier.state.copyWith(
               devices: [midiDevice],
-              connectionStatus: ConnectionStatus.connected,
               selectedDevice: midiDevice,
-              expectedChord: expectedChord,
-              playedNotes: [],
-              gameState: const GameState(
-                gamesCount: 0,
-                successCount: 0,
-                currentResult: CurrentResult.none,
+              connectionStatus: ConnectionStatus.disconnected,
+            );
+
+            mockedMidiRepository.mockConnect();
+            mockedChordRepository.mockRnadom(expectedChord);
+
+            await notifier.onActionButtonPressed();
+
+            verify(() => mockedMidiRepository.connect(midiDevice)).called(1);
+
+            expect(
+              notifier.state,
+              ChordsTestPageModel(
+                devices: [midiDevice],
+                connectionStatus: ConnectionStatus.connected,
+                selectedDevice: midiDevice,
+                expectedChord: expectedChord,
+                playedNotes: [],
+                gameState: const GameState(
+                  gamesCount: 0,
+                  successCount: 0,
+                  currentResult: CurrentResult.none,
+                ),
               ),
-            ),
-          );
-        });
+            );
+          },
+        );
 
         test('should disconnect a device when connected', () async {
           final midiDevice = MidiDevice('id', 'name', 'type', false);
           const expectedChord = Chord(name: 'name', notes: []);
-          viewModel.state = viewModel.state.copyWith(
+          notifier.state = notifier.state.copyWith(
             devices: [midiDevice],
             selectedDevice: midiDevice,
             connectionStatus: ConnectionStatus.connected,
@@ -156,10 +162,10 @@ void main() {
             gameState: GameState.newGame(),
           );
 
-          await viewModel.onActionButtonPressed();
+          await notifier.onActionButtonPressed();
 
           expect(
-            viewModel.state,
+            notifier.state,
             ChordsTestPageModel(
               devices: [midiDevice],
               connectionStatus: ConnectionStatus.disconnected,
@@ -173,7 +179,7 @@ void main() {
 
         test('should do nothing when a device is not selected', () async {
           final midiDevice = MidiDevice('id', 'name', 'type', false);
-          viewModel.state = viewModel.state.copyWith(
+          notifier.state = notifier.state.copyWith(
             devices: [midiDevice],
             selectedDevice: null,
             connectionStatus: ConnectionStatus.disconnected,
@@ -182,10 +188,10 @@ void main() {
             gameState: null,
           );
 
-          await viewModel.onActionButtonPressed();
+          await notifier.onActionButtonPressed();
 
           expect(
-            viewModel.state,
+            notifier.state,
             ChordsTestPageModel(
               devices: [midiDevice],
               connectionStatus: ConnectionStatus.disconnected,

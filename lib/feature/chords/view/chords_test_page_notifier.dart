@@ -19,9 +19,9 @@ enum MidiSetUpChangeEvent { deviceFound, deviceLost }
 
 const _midiFontAssetPath = 'assets/piano_font.sf2';
 
-final chordsTestPageViewModelProvder =
-    StateNotifierProvider<ChordsTestPageViewModel, ChordsTestPageModel>(
-  (ref) => ChordsTestPageViewModel(
+final chordsTestPageNotifierProvder =
+    StateNotifierProvider<ChordsTestPageNotifier, ChordsTestPageModel>(
+  (ref) => ChordsTestPageNotifier(
     ref.read(midiRepositoryProvider),
     ref.read(chordRepositoryProvider),
     ref.read(matchChordUseCaseProvider),
@@ -29,8 +29,8 @@ final chordsTestPageViewModelProvder =
   ),
 );
 
-class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
-  ChordsTestPageViewModel(
+class ChordsTestPageNotifier extends StateNotifier<ChordsTestPageModel> {
+  ChordsTestPageNotifier(
     this._midiRepository,
     this._chordRepository,
     this._matchChordUseCase,
@@ -144,12 +144,12 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
 
     // Delay used to display all of the played notes for a while
     // before piano is cleared
-    Future delay() => Future.delayed(200.milliseconds);
+    Future delay200() => Future.delayed(200.milliseconds);
 
     switch (chordMatch) {
       case ChordMatch.matched:
         state = state.copyWith(playedNotes: playedNotes);
-        await delay();
+        await delay200();
 
         chord = _chordRepository.random;
         playedNotes.clear();
@@ -159,7 +159,7 @@ class ChordsTestPageViewModel extends StateNotifier<ChordsTestPageModel> {
         break;
       case ChordMatch.failed:
         state = state.copyWith(playedNotes: playedNotes);
-        await delay();
+        await delay200();
 
         playedNotes.clear();
         gameState = gameState.addFailure();
